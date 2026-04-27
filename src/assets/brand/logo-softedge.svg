@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" fill="none">
+  <g transform="translate(4, 8)">
+    <path
+      d="M28 44c-8 0-14-6-14-14 0-7 5-12 12-13-1-8 6-15 15-15 9 0 15 7 15 16 0 10-8 18-18 18-4 0-7-1-10-3"
+      stroke="#903291"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <circle cx="18" cy="46" r="4.5" fill="#F9A83D" />
+    <path
+      d="M52 18h32M52 34h28M52 50h24"
+      stroke="#43B7E8"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+    <path
+      d="M52 18v32"
+      stroke="#43B7E8"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+  </g>
+  <text
+    x="100"
+    y="38"
+    fill="#43B7E8"
+    font-family="system-ui, sans-serif"
+    font-size="26"
+    font-weight="800"
+    letter-spacing="0.04em"
+  >
+    SOFTEDGE
+  </text>
+  <text
+    x="100"
+    y="56"
+    fill="#F9A83D"
+    font-family="system-ui, sans-serif"
+    font-size="9.5"
+    font-weight="600"
+    letter-spacing="0.22em"
+  >
+    TECHNOLOGY LIMITED
+  </text>
+</svg>

@@ -1,0 +1,269 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Portfolio: refined geometric sans — headings & UI */
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-screen bg-[#020617] font-sans antialiased text-base-content;
+  }
+}
+
+/* Lively button motion — DaisyUI + custom brand CTAs */
+@layer components {
+  .btn:not(.btn-link) {
+    transition:
+      transform 0.28s cubic-bezier(0.34, 1.45, 0.64, 1),
+      box-shadow 0.32s ease,
+      filter 0.22s ease;
+  }
+
+  .btn:not(.btn-link):hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px -12px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn:not(.btn-link):active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.12s;
+  }
+
+  /* Primary cyan CTAs (navbar, hero): shine + glow */
+  .btn-brand {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 0.28s cubic-bezier(0.34, 1.45, 0.64, 1),
+      box-shadow 0.35s ease,
+      filter 0.22s ease;
+  }
+
+  .btn-brand::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.22) 48%,
+      rgba(255, 255, 255, 0.08) 52%,
+      transparent 65%
+    );
+    transform: translateX(-120%) skewX(-12deg);
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-brand:hover::before {
+    transform: translateX(120%) skewX(-12deg);
+  }
+
+  .btn-brand:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 14px 32px -10px rgba(0, 210, 255, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+    filter: brightness(1.05);
+  }
+
+  .btn-brand:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 6px 16px -8px rgba(0, 210, 255, 0.4);
+    transition-duration: 0.12s;
+  }
+
+  .btn-brand-icon {
+    transition: transform 0.3s cubic-bezier(0.34, 1.45, 0.64, 1);
+  }
+
+  .group:hover .btn-brand-icon {
+    transform: translate(3px, -3px);
+  }
+
+  .group:active .btn-brand-icon {
+    transform: translate(1px, -1px);
+  }
+
+  /* —— Global site background: motion + glass (fixed in App) —— */
+  .site-bg__base {
+    position: absolute;
+    inset: 0;
+    background: #020617;
+  }
+
+  .site-bg__gradient-flow {
+    position: absolute;
+    inset: -35%;
+    background: linear-gradient(
+      125deg,
+      #020617 0%,
+      #0c4a6e 18%,
+      #155e75 32%,
+      #1e3a8a 48%,
+      #312e81 62%,
+      #0e7490 78%,
+      #020617 100%
+    );
+    background-size: 400% 400%;
+    animation: site-bg-flow 22s ease-in-out infinite;
+    opacity: 0.85;
+  }
+
+  .site-bg__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(72px);
+    opacity: 0.45;
+    will-change: transform;
+  }
+
+  .site-bg__blob--1 {
+    width: min(70vw, 680px);
+    height: min(70vw, 680px);
+    left: -20%;
+    top: 5%;
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(0, 210, 255, 0.55),
+      rgba(56, 189, 248, 0.15) 58%,
+      transparent 72%
+    );
+    animation: site-bg-blob-a 24s ease-in-out infinite;
+  }
+
+  .site-bg__blob--2 {
+    width: min(55vw, 520px);
+    height: min(55vw, 520px);
+    right: -15%;
+    bottom: 10%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(99, 102, 241, 0.45),
+      rgba(59, 130, 246, 0.12) 55%,
+      transparent 70%
+    );
+    animation: site-bg-blob-b 30s ease-in-out infinite;
+  }
+
+  .site-bg__blob--3 {
+    width: min(45vw, 420px);
+    height: min(45vw, 420px);
+    left: 30%;
+    bottom: -12%;
+    background: radial-gradient(
+      circle at 45% 45%,
+      rgba(34, 211, 238, 0.4),
+      transparent 65%
+    );
+    animation: site-bg-blob-c 18s ease-in-out infinite;
+  }
+
+  .site-bg__aurora {
+    position: absolute;
+    inset: -40%;
+    background: conic-gradient(
+      from 200deg at 50% 50%,
+      rgba(56, 189, 248, 0.07) 0deg,
+      rgba(99, 102, 241, 0.09) 120deg,
+      rgba(14, 165, 233, 0.07) 240deg,
+      rgba(56, 189, 248, 0.07) 360deg
+    );
+    animation: site-bg-rotate 100s linear infinite;
+    opacity: 0.75;
+  }
+
+  .site-bg__glass {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      195deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(0, 210, 255, 0.05) 28%,
+      rgba(15, 23, 42, 0.42) 55%,
+      rgba(2, 6, 23, 0.62) 100%
+    );
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
+  }
+}
+
+@keyframes site-bg-flow {
+  0%,
+  100% {
+    background-position: 0% 40%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+}
+
+@keyframes site-bg-blob-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(8%, -6%) scale(1.08);
+  }
+  70% {
+    transform: translate(-5%, 5%) scale(0.94);
+  }
+}
+
+@keyframes site-bg-blob-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(-10%, 8%) scale(1.06) rotate(-8deg);
+  }
+}
+
+@keyframes site-bg-blob-c {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-6%, -10%);
+  }
+}
+
+@keyframes site-bg-rotate {
+  from {
+    transform: rotate(0deg) scale(1.08);
+  }
+  to {
+    transform: rotate(360deg) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-bg__gradient-flow,
+  .site-bg__blob,
+  .site-bg__aurora {
+    animation: none !important;
+  }
+
+  .site-bg__gradient-flow {
+    background-position: 50% 50%;
+    opacity: 0.65;
+  }
+
+  .site-bg__blob {
+    opacity: 0.22;
+  }
+
+  .site-bg__aurora {
+    opacity: 0.35;
+  }
+}

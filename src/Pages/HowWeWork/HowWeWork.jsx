@@ -1,0 +1,241 @@
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { ScrollReveal } from '../../components/ScrollReveal/ScrollReveal.jsx'
+
+const CYAN = '#00d2ff'
+const NAVY = '#0a3146'
+
+const HISTORY = [
+  {
+    year: '2000',
+    title: 'Company founded',
+    description:
+      "We're committed to providing customers exceptional service offering employees the best training.",
+    image:
+      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    year: '2005',
+    title: 'Hiring more staff',
+    description:
+      "We're committed to providing customers exceptional service offering employees the best training.",
+    image:
+      'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    year: '2007',
+    title: 'Working on projects',
+    description:
+      "We're committed to providing customers exceptional service offering employees the best training.",
+    image:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80',
+  },
+]
+
+const PLANS = [
+  {
+    name: 'Basic',
+    price: 59,
+    image:
+      'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    name: 'Standard',
+    price: 99,
+    image:
+      'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    name: 'Professional',
+    price: 129,
+    image:
+      'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80',
+  },
+]
+
+const FEATURES = [
+  '30 Analytics Campaign',
+  'Branded Reports',
+  '700 Keywords',
+  '100 Social Account',
+  'Phone & Email Support',
+]
+
+const STATS = [
+  { value: '15k', label: 'Customers' },
+  { value: '78+', label: 'Branches' },
+  { value: '3k', label: 'Employees' },
+  { value: '8+', label: 'Countries' },
+]
+
+export default function HowWeWork() {
+  const historySliderRef = useRef(null)
+
+  const slideHistory = (direction) => {
+    const el = historySliderRef.current
+    if (!el) return
+    const amount = Math.max(el.clientWidth * 0.82, 320)
+    el.scrollBy({ left: direction * amount, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="w-full text-white">
+      <section className="relative isolate overflow-hidden">
+        <div
+          className="h-[220px] w-full bg-cover bg-center sm:h-[250px]"
+          style={{
+            backgroundImage:
+              'url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80)',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/75 via-[#000b1e]/45 to-transparent" />
+        <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
+          <ScrollReveal variant="slide-right" duration={0.55}>
+            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">How We Work</h1>
+            <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
+              <Link to="/" className="transition-colors hover:text-[#00d2ff]">
+                Home
+              </Link>
+              <span className="text-[#00d2ff]">●</span>
+              <Link to="/how-we-work" className="transition-colors hover:text-[#00d2ff]">
+                How We Work
+              </Link>
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+        <ScrollReveal as="header" className="mx-auto max-w-3xl text-center" variant="fade-up" duration={0.55}>
+          <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Our History</p>
+          <h2 className="mt-3 text-5xl font-bold text-white">How We Started</h2>
+        </ScrollReveal>
+
+        <div className="mt-8 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => slideHistory(-1)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[#000b1e]/40 text-xl text-white transition hover:border-[#00d2ff]/65 hover:text-[#00d2ff]"
+            aria-label="Previous history cards"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            onClick={() => slideHistory(1)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[#000b1e]/40 text-xl text-white transition hover:border-[#00d2ff]/65 hover:text-[#00d2ff]"
+            aria-label="Next history cards"
+          >
+            →
+          </button>
+        </div>
+
+        <div
+          ref={historySliderRef}
+          className="mt-4 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:thin]"
+          aria-label="How We Started cards slider"
+        >
+          {HISTORY.map((item, i) => (
+            <ScrollReveal
+              key={item.year}
+              variant="fade-up"
+              delay={i * 0.1}
+              className="w-[88%] shrink-0 snap-start overflow-hidden border border-white/10 bg-[#0a3146]/30 sm:w-[66%] md:w-[48%] lg:w-[32%]"
+            >
+              <div className="relative">
+                <img src={item.image} alt={item.title} className="h-48 w-full object-cover" loading="lazy" />
+                <div
+                  className="absolute left-1/2 top-2 -translate-x-1/2 px-4 py-1 text-sm font-bold text-[#000b1e]"
+                  style={{ backgroundColor: CYAN }}
+                >
+                  {item.year}
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-3xl font-bold text-white">{item.title}</h3>
+                <p className="mt-2 text-base leading-7 text-white/70">{item.description}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+        <ScrollReveal as="header" className="mx-auto max-w-3xl text-center" variant="fade-up" duration={0.55}>
+          <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Pricing Table</p>
+          <h2 className="mt-3 text-5xl font-bold text-white">Our Pricing Plans</h2>
+        </ScrollReveal>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {PLANS.map((plan, i) => (
+            <ScrollReveal
+              key={plan.name}
+              variant="fade-up"
+              delay={i * 0.1}
+              className="overflow-hidden border border-white/10 bg-[#0a3146]/30"
+            >
+              <div className="relative">
+                <img src={plan.image} alt={plan.name} className="h-44 w-full object-cover" loading="lazy" />
+                <div className="absolute left-0 top-0 bg-[#00d2ff] px-2 py-4 text-xs font-bold uppercase tracking-wide text-[#000b1e] [writing-mode:vertical-rl]">
+                  {plan.name}
+                </div>
+                <div className="absolute bottom-3 right-3 rounded-sm bg-[#0a3146] px-3 py-2 text-center">
+                  <p className="text-4xl font-bold text-white">${plan.price}</p>
+                  <p className="text-xs uppercase text-white/70">Monthly</p>
+                </div>
+              </div>
+
+              <ul className="divide-y divide-white/10">
+                {FEATURES.map((feature) => (
+                  <li key={feature} className="px-4 py-3 text-sm text-white/85">
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="p-4">
+                <button
+                  type="button"
+                  className="w-full border border-white/20 bg-[#00d2ff] px-4 py-2 text-sm font-bold uppercase text-[#000b1e] transition hover:bg-[#38ddff]"
+                >
+                  Start Now
+                </button>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+        <div className="relative border border-white/10 pb-16 md:pb-20">
+          <div className="overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1800&q=80"
+              alt="Team high five"
+              className="h-[360px] w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <ScrollReveal
+            variant="zoom-out"
+            duration={0.55}
+            className="absolute bottom-0 left-1/2 w-[88%] -translate-x-1/2 translate-y-1/2 border border-white/15 bg-[#000b1e]/45 px-4 py-6 text-center shadow-[0_12px_40px_-8px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-2xl backdrop-saturate-150 sm:w-[82%] md:w-[76%]"
+          >
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="border-r border-white/10 last:border-r-0">
+                  <p className="text-5xl font-bold text-[#00d2ff]">{stat.value}</p>
+                  <p className="mt-1 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <div className="h-28 md:h-32" />
+    </div>
+  )
+}
