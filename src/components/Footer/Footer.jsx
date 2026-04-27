@@ -1,11 +1,9 @@
 import { ScrollReveal } from '../ScrollReveal/ScrollReveal.jsx'
 
 export default function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="relative mt-8 border-t border-white/10 bg-[#0a344a] text-white/85">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#ef6f90]/50 via-[#00d2ff]/60 to-[#ef6f90]/50" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00d2ff]/60 to-transparent" />
 
       <ScrollReveal
         as="div"
@@ -82,7 +80,8 @@ export default function Footer() {
         <div className="border-t border-white/10 bg-[#0a3044]">
           <div className="mx-auto w-full max-w-7xl px-4 py-5 text-center sm:px-6 lg:px-8">
             <p className="text-sm text-white/80 sm:text-base">
-              © {year} Solutic Powered by <span className="font-semibold text-[#ef6f90]">Website Design Templates</span>
+              © Developed by{' '}
+              <span className="font-semibold text-[#00d2ff]">SoftEdge Technology LTD.</span>
             </p>
           </div>
         </div>
