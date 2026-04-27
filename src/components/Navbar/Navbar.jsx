@@ -118,6 +118,41 @@ export default function Navbar() {
                 <a className="text-white/90 hover:bg-white/10">Overview</a>
               </li>
               <li>
+                <Link to="/services" className="text-white/90 hover:bg-white/10">
+                  Our Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/information-security" className="text-white/90 hover:bg-white/10">
+                  Our Information Security
+                </Link>
+              </li>
+              <li>
+                <Link to="/mobile-platform" className="text-white/90 hover:bg-white/10">
+                  Mobile Platform
+                </Link>
+              </li>
+              <li>
+                <Link to="/data-synchronization" className="text-white/90 hover:bg-white/10">
+                  Data Synchronization
+                </Link>
+              </li>
+              <li>
+                <Link to="/process-automation" className="text-white/90 hover:bg-white/10">
+                  Process Automation
+                </Link>
+              </li>
+              <li>
+                <Link to="/event-processing" className="text-white/90 hover:bg-white/10">
+                  Event Processing
+                </Link>
+              </li>
+              <li>
+                <Link to="/content-management" className="text-white/90 hover:bg-white/10">
+                  Content Management
+                </Link>
+              </li>
+              <li>
                 <a className="text-white/90 hover:bg-white/10">Consulting</a>
               </li>
             </ul>
@@ -231,11 +266,59 @@ export default function Navbar() {
         <div className="rounded-b-2xl border-t border-white/10 bg-[#000b1e]/35 px-4 py-4 backdrop-blur-md md:rounded-b-[1.35rem] lg:hidden">
           <nav className="flex flex-col gap-3" aria-label="Mobile">
             <Link
-              to="/"
+              to="/services"
               className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
               onClick={() => setMobileOpen(false)}
             >
-              Services
+              Our Services
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/information-security"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Our Information Security
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/mobile-platform"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Mobile Platform
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/data-synchronization"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Data Synchronization
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/process-automation"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Process Automation
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/event-processing"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Event Processing
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/content-management"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Content Management
               <ChevronDown />
             </Link>
             <Link

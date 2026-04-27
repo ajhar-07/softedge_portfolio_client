@@ -5,7 +5,14 @@ import AboutPage from '../Pages/AboutPage/AboutPage.jsx'
 import FAQpage from '../Pages/FAQ/FAQpage.jsx'
 import Home from '../Pages/Homepages/Home/Home.jsx'
 import HowWeWork from '../Pages/HowWeWork/HowWeWork.jsx'
+import EventProcessingPage from '../Pages/EventProcessing/EventProcessingPage.jsx'
+import ContentManagementPage from '../Pages/ContentManagement/ContentManagementPage.jsx'
+import InformationSecurityPage from '../Pages/InformationSecurity/InformationSecurityPage.jsx'
+import MobilerPlatformPage from '../Pages/MobilrPlatform/MobilerPlatformPage.jsx'
+import DataSynchronizationPage from '../Pages/DataSynchronization/DataSynchronizationPage.jsx'
+import ProcessAutomationPage from '../Pages/ProcessAutomation/ProcessAutomationPage.jsx'
 import OurTeampage from '../Pages/OurTeam/OurTeampage.jsx'
+import ServicesPage from '../Pages/Services/ServicesPage.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 function Login() {
@@ -55,6 +62,13 @@ export default function AppRoutes() {
         <Route path="faq" element={<FAQpage />} />
         <Route path="how-we-work" element={<HowWeWork />} />
         <Route path="our-team" element={<OurTeampage />} />
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="information-security" element={<InformationSecurityPage />} />
+        <Route path="mobile-platform" element={<MobilerPlatformPage />} />
+        <Route path="data-synchronization" element={<DataSynchronizationPage />} />
+        <Route path="process-automation" element={<ProcessAutomationPage />} />
+        <Route path="event-processing" element={<EventProcessingPage />} />
+        <Route path="content-management" element={<ContentManagementPage />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="dashboard" element={<Dashboard />} />
