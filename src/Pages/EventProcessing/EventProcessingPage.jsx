@@ -54,7 +54,7 @@ export default function EventProcessingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/80 via-[#000b1e]/55 to-transparent" />
         <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <ScrollReveal variant="slide-right" duration={0.55}>
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">Event Processing</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Event Processing</h1>
             <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
               <Link to="/" className="transition-colors hover:text-[#00d2ff]">
                 Home
@@ -68,7 +68,7 @@ export default function EventProcessingPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-8 lg:py-14">
+      <section className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:py-14">
         <aside className="space-y-5">
           <ScrollReveal variant="fade-up" className="border border-white/10 bg-[#0a3146]/70 p-5">
             <h2 className="text-lg font-bold text-white">Main Services</h2>
@@ -137,7 +137,7 @@ export default function EventProcessingPage() {
         <main>
           <ScrollReveal variant="fade-up" className="space-y-6">
             <div>
-              <h2 className="text-4xl font-bold text-white">Event Processing</h2>
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">Event Processing</h2>
               <p className="mt-3 text-base leading-8 text-white/80">
                 Event processing helps teams react instantly to system activities and user actions. We design robust
                 event flows for real-time analytics, automation triggers, and reliable outcomes.
@@ -149,7 +149,7 @@ export default function EventProcessingPage() {
                 <img
                   src={LEFT_IMAGE}
                   alt="Team discussing event workflows"
-                  className="h-[240px] w-full border border-white/10 object-cover"
+                  className="h-[210px] w-full border border-white/10 object-cover sm:h-[240px]"
                   loading="lazy"
                 />
                 <p className="text-base leading-8 text-white/80">
@@ -175,14 +175,14 @@ export default function EventProcessingPage() {
                 <img
                   src={RIGHT_IMAGE}
                   alt="Colleagues reviewing operational data"
-                  className="h-[240px] w-full border border-white/10 object-cover"
+                  className="h-[210px] w-full border border-white/10 object-cover sm:h-[240px]"
                   loading="lazy"
                 />
               </div>
             </div>
 
             <div>
-              <h3 className="text-4xl font-bold text-white">Our work benefits</h3>
+              <h3 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">Our work benefits</h3>
               <p className="mt-3 text-base leading-8 text-white/80">
                 There are many variations of passages of Lorem Ipsum available, but the majority have suffered
                 alteration in some form, by injected humour, or randomised words which do not look even slightly

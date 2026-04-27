@@ -85,9 +85,9 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 mb-3 px-3 pt-3 text-white sm:mb-4 sm:px-4 md:px-6 md:pt-4">
+    <header className="sticky top-0 z-50 mb-2 px-2 pt-2 text-white sm:mb-4 sm:px-4 sm:pt-3 md:px-6 md:pt-4">
       <div className="mx-auto max-w-[1440px] overflow-visible rounded-2xl border border-white/15 bg-[#000b1e]/45 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-2xl backdrop-saturate-150 md:rounded-[1.35rem]">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 overflow-visible px-4 py-3 md:px-6 lg:px-10">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 overflow-visible px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 md:px-6 lg:gap-4 lg:px-10">
         <Link
           to="/"
           className="flex shrink-0 items-center rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#43B7E8]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
@@ -96,9 +96,9 @@ export default function Navbar() {
           <img
             src={logoSrc}
             alt=""
-            width={220}
+            width={190}
             height={48}
-            className="h-9 w-auto max-h-10 sm:h-10 sm:max-h-11 object-contain object-left"
+            className="h-8 w-auto max-h-9 object-contain object-left sm:h-10 sm:max-h-11"
             decoding="async"
             onError={() => setLogoSrc(logoSvgUrl)}
           />
@@ -225,10 +225,10 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 md:gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 md:gap-3">
           <button
             type="button"
-            className="group btn-brand inline-flex items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2.5 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:px-4 md:text-xs"
+            className="group btn-brand hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2.5 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex md:px-4 md:text-xs"
           >
             Let&apos;s talk
             <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5 md:h-4 md:w-4" />
@@ -236,7 +236,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="rounded p-2 text-white transition-all duration-200 hover:scale-110 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            className="hidden rounded p-2 text-white transition-all duration-200 hover:scale-110 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:inline-flex"
             aria-label="Search"
           >
             <SearchIcon />
@@ -263,8 +263,8 @@ export default function Navbar() {
         </div>
 
       {mobileOpen ? (
-        <div className="rounded-b-2xl border-t border-white/10 bg-[#000b1e]/35 px-4 py-4 backdrop-blur-md md:rounded-b-[1.35rem] lg:hidden">
-          <nav className="flex flex-col gap-3" aria-label="Mobile">
+        <div className="max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-b-2xl border-t border-white/10 bg-[#000b1e]/35 px-4 py-4 backdrop-blur-md md:rounded-b-[1.35rem] lg:hidden">
+          <nav className="flex flex-col gap-2.5" aria-label="Mobile">
             <Link
               to="/services"
               className="flex items-center justify-between py-2 text-sm font-medium text-white/95"

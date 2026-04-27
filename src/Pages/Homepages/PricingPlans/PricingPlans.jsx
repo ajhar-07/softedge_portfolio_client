@@ -87,8 +87,7 @@ export default function PricingPlans() {
                   loading="lazy"
                 />
                 <div
-                  className="absolute left-0 top-0 z-10 bg-[#00d2ff] py-5 pl-2 pr-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#000b1e] shadow-md sm:text-xs sm:py-6 sm:pl-2.5 sm:pr-3"
-                  style={{ writingMode: 'vertical-rl' }}
+                  className="absolute left-0 top-0 z-10 bg-[#00d2ff] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[#000b1e] shadow-md [writing-mode:horizontal-tb] sm:px-0 sm:py-6 sm:pl-2.5 sm:pr-3 sm:text-xs sm:[writing-mode:vertical-rl]"
                 >
                   {plan.name}
                 </div>

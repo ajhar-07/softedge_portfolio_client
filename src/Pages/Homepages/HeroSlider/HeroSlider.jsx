@@ -54,7 +54,7 @@ export default function HeroSlider() {
       duration={0.68}
       amount={0.1}
     >
-      <div className="relative min-h-[min(92vh,720px)] lg:min-h-[560px]">
+      <div className="relative min-h-[min(86vh,680px)] sm:min-h-[min(90vh,720px)] lg:min-h-[560px]">
         {slides.map((slide, index) => (
           <article
             key={slide.id}
@@ -63,7 +63,7 @@ export default function HeroSlider() {
             }`}
             aria-hidden={index !== active}
           >
-            <div className="relative h-[min(46vh,360px)] min-h-[220px] overflow-hidden rounded-2xl border border-white/10 lg:col-span-7 lg:h-auto lg:min-h-[500px]">
+            <div className="relative h-[min(40vh,320px)] min-h-[200px] overflow-hidden rounded-2xl border border-white/10 sm:h-[min(46vh,360px)] sm:min-h-[220px] lg:col-span-7 lg:h-auto lg:min-h-[500px]">
               <img
                 src={slide.image}
                 alt=""
@@ -81,7 +81,7 @@ export default function HeroSlider() {
             </div>
 
             <div
-              className="flex flex-col justify-center border-l border-white/[0.08] bg-transparent px-6 py-10 sm:px-10 lg:col-span-5 lg:px-12 lg:py-16"
+              className="flex flex-col justify-center bg-transparent px-4 py-8 sm:px-8 sm:py-10 lg:col-span-5 lg:border-l lg:border-white/[0.08] lg:px-12 lg:py-16"
             >
               <div className="mx-auto w-full max-w-xl lg:mx-0">
                 <h1 className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.35rem] xl:text-[2.65rem]">

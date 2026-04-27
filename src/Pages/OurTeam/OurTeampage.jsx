@@ -130,7 +130,7 @@ export default function OurTeampage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/75 via-[#000b1e]/45 to-transparent" />
         <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <ScrollReveal variant="slide-right" duration={0.55}>
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">Our Team</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Our Team</h1>
             <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
               <Link to="/" className="transition-colors hover:text-[#00d2ff]">
                 Home
@@ -144,7 +144,7 @@ export default function OurTeampage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {TEAM_MEMBERS.map((member, index) => (
             <ScrollReveal
@@ -188,7 +188,7 @@ export default function OurTeampage() {
                 </div>
               </div>
               <div className="pt-3 text-center">
-                <h3 className="text-3xl font-bold text-white">{member.name}</h3>
+                <h3 className="text-2xl font-bold text-white sm:text-3xl">{member.name}</h3>
                 <p className="mt-1 text-base text-white/70">{member.role}</p>
               </div>
             </ScrollReveal>

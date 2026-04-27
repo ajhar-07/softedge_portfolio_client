@@ -159,7 +159,7 @@ export default function AboutPage() {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00d2ff]/70 to-transparent" />
         <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <ScrollReveal variant="slide-right" duration={0.55}>
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">About Us</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">About Us</h1>
             <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
               <Link to="/" className="transition-colors hover:text-[#00d2ff]">
                 Home
@@ -173,7 +173,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <ScrollReveal as="header" className="mx-auto max-w-3xl text-center" variant="fade-up" duration={0.55}>
           <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00d2ff]">Work Process</p>
           <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">Our Working Process</h2>
@@ -213,10 +213,10 @@ export default function AboutPage() {
             loading="lazy"
           />
         </div>
-        <div className="relative bg-[#0d4260] px-6 py-12 sm:px-10 lg:px-12">
+        <div className="relative bg-[#0d4260] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
           <ScrollReveal variant="slide-left" duration={0.58} className="max-w-xl">
             <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Why Choose Us</p>
-            <h2 className="mt-3 text-4xl font-bold leading-tight text-white sm:text-5xl">
+            <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
               We are building a sustainable future
             </h2>
             <p className="mt-5 text-base leading-8 text-white/80">
@@ -265,10 +265,10 @@ export default function AboutPage() {
             className="mx-auto h-14 w-14 rounded-full border-2 border-white/30 object-cover"
             loading="lazy"
           />
-          <p className="mt-5 text-3xl leading-relaxed text-white/95">
+          <p className="mt-5 text-xl leading-relaxed text-white/95 sm:text-2xl lg:text-3xl">
             {currentReview.text}
           </p>
-          <p className="mt-5 text-2xl font-bold text-[#00d2ff]">{currentReview.name}</p>
+          <p className="mt-5 text-xl font-bold text-[#00d2ff] sm:text-2xl">{currentReview.name}</p>
           <p className="text-base text-white/80">{currentReview.role}</p>
           <div className="mt-5 flex items-center justify-center gap-2">
             {REVIEWS.map((item, i) => (
@@ -294,8 +294,8 @@ export default function AboutPage() {
         >
           <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
             {STATS.map((stat, index) => (
-              <div key={stat.label} className="border-r border-[#0a3146]/15 last:border-r-0">
-                <p className="text-5xl font-bold text-[#00d2ff]">
+              <div key={stat.label} className="border-[#0a3146]/15 odd:border-r md:border-r md:last:border-r-0">
+                <p className="text-3xl font-bold text-[#00d2ff] sm:text-4xl lg:text-5xl">
                   {statValues[index]}
                   {stat.suffix}
                 </p>
@@ -308,10 +308,12 @@ export default function AboutPage() {
         </ScrollReveal>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-16">
+      <section className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-16">
         <ScrollReveal variant="slide-right" duration={0.58}>
           <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00d2ff]">About Us</p>
-          <h2 className="mt-3 text-5xl font-bold leading-tight text-white">We’re Delivering The Best Customer Experience</h2>
+          <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+            We&apos;re Delivering The Best Customer Experience
+          </h2>
 
           <div className="mt-8 space-y-7">
             <article className="flex items-start gap-4">
@@ -319,8 +321,8 @@ export default function AboutPage() {
                 •
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-white">Our Mission</h3>
-                <p className="mt-2 text-lg leading-8 text-white/75">
+                <h3 className="text-2xl font-bold text-white sm:text-3xl">Our Mission</h3>
+                <p className="mt-2 text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
                   Our Mission is to be the industry&apos;s top-rated provider issuer enterprise targeting
                   satisfying the most to our clients.
                 </p>
@@ -332,8 +334,8 @@ export default function AboutPage() {
                 ◇
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-white">Our Vision</h3>
-                <p className="mt-2 text-lg leading-8 text-white/75">
+                <h3 className="text-2xl font-bold text-white sm:text-3xl">Our Vision</h3>
+                <p className="mt-2 text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
                   Our Vision is to be a top Web Design company in the IT sector and progress in our
                   current position in the market.
                 </p>
@@ -360,10 +362,10 @@ export default function AboutPage() {
         </ScrollReveal>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <ScrollReveal as="header" className="mx-auto max-w-3xl text-center" variant="fade-up" duration={0.55}>
           <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00d2ff]">Our Team</p>
-          <h2 className="mt-3 text-5xl font-bold text-white">Our Motivated Team</h2>
+          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">Our Motivated Team</h2>
         </ScrollReveal>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

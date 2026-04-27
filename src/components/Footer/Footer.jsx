@@ -9,14 +9,14 @@ export default function Footer() {
 
       <ScrollReveal
         as="div"
-        className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 lg:px-8"
+        className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 lg:px-8 lg:py-12"
         variant="fade-up"
         duration={0.55}
         amount={0.2}
       >
         <section>
-          <h3 className="text-3xl font-bold tracking-tight text-white">About Company</h3>
-          <p className="mt-5 max-w-sm text-[1.08rem] leading-8 text-white/75">
+          <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">About Company</h3>
+          <p className="mt-4 max-w-sm text-sm leading-7 text-white/75 sm:mt-5 sm:text-base sm:leading-8">
             We have 14+ years experience. Helping you overcome technology challenges.
           </p>
 
@@ -35,8 +35,8 @@ export default function Footer() {
         </section>
 
         <section>
-          <h3 className="text-3xl font-bold tracking-tight text-white">Contacts</h3>
-          <ul className="mt-5 space-y-3 text-[1.08rem] leading-8 text-white/80">
+          <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Contacts</h3>
+          <ul className="mt-4 space-y-2.5 text-sm leading-7 text-white/80 sm:mt-5 sm:space-y-3 sm:text-base sm:leading-8">
             <li>
               <span className="font-bold text-white">Adress:</span> 4211 Webster Street Rahway, NJ 07065.
             </li>
@@ -50,8 +50,8 @@ export default function Footer() {
         </section>
 
         <section>
-          <h3 className="text-3xl font-bold tracking-tight text-white">Newsletter</h3>
-          <p className="mt-5 max-w-sm text-[1.08rem] leading-8 text-white/75">
+          <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Newsletter</h3>
+          <p className="mt-4 max-w-sm text-sm leading-7 text-white/75 sm:mt-5 sm:text-base sm:leading-8">
             Subscribe to our newsletter to receive updates on the latest news!
           </p>
 
@@ -59,16 +59,16 @@ export default function Footer() {
             <label htmlFor="footer-newsletter" className="sr-only">
               Newsletter email
             </label>
-            <div className="flex h-12 items-center overflow-hidden rounded-sm border border-white/10 bg-[#3b5b71]">
+            <div className="flex flex-col overflow-hidden rounded-sm border border-white/10 bg-[#3b5b71] sm:h-12 sm:flex-row sm:items-center">
               <input
                 id="footer-newsletter"
                 type="email"
                 placeholder="Subscribe with us"
-                className="h-full w-full bg-transparent px-4 text-sm text-white placeholder:text-white/70 focus:outline-none"
+                className="h-11 w-full bg-transparent px-4 text-sm text-white placeholder:text-white/70 focus:outline-none sm:h-full"
               />
               <button
                 type="submit"
-                className="inline-flex h-full items-center justify-center border-l border-white/10 px-4 text-[#dceaf3] transition-colors duration-200 hover:bg-[#00d2ff]/20 hover:text-[#00d2ff]"
+                className="inline-flex h-11 items-center justify-center border-t border-white/10 px-4 text-[#dceaf3] transition-colors duration-200 hover:bg-[#00d2ff]/20 hover:text-[#00d2ff] sm:h-full sm:border-l sm:border-t-0"
                 aria-label="Submit newsletter form"
               >
                 ➤
@@ -81,7 +81,7 @@ export default function Footer() {
       <ScrollReveal as="aside" variant="fade-up" duration={0.5} amount={0.2}>
         <div className="border-t border-white/10 bg-[#0a3044]">
           <div className="mx-auto w-full max-w-7xl px-4 py-5 text-center sm:px-6 lg:px-8">
-            <p className="text-[1.05rem] text-white/80">
+            <p className="text-sm text-white/80 sm:text-base">
               © {year} Solutic Powered by <span className="font-semibold text-[#ef6f90]">Website Design Templates</span>
             </p>
           </div>

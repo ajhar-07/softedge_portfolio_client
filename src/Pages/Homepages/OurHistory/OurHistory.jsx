@@ -139,7 +139,7 @@ export default function OurHistory() {
   return (
     <section className="relative w-full overflow-hidden bg-transparent" aria-labelledby="our-history-heading">
       {/* —— Stats hero (team image + bar) —— */}
-      <div className="relative min-h-[min(56vh,520px)] w-full pb-8 md:pb-12 lg:min-h-[480px]">
+      <div className="relative min-h-[min(50vh,460px)] w-full pb-8 md:pb-12 lg:min-h-[480px]">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -156,7 +156,7 @@ export default function OurHistory() {
           <ScrollReveal
             variant="scale"
             duration={0.58}
-            className="relative -mb-px w-full overflow-hidden rounded-t-xl border border-white/10 bg-transparent px-4 py-8 sm:px-8"
+            className="relative -mb-px w-full overflow-hidden rounded-t-xl border border-white/10 bg-transparent px-4 py-6 sm:px-8 sm:py-8"
           >
             <div className="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-4">
               {STATS.map((s, i) => (

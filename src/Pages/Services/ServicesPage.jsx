@@ -51,7 +51,7 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/75 via-[#000b1e]/45 to-transparent" />
         <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <ScrollReveal variant="slide-right" duration={0.55}>
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">Services</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Services</h1>
             <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
               <Link to="/" className="transition-colors hover:text-[#00d2ff]">
                 Home
@@ -65,7 +65,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <ScrollReveal as="header" className="mx-auto max-w-3xl text-center" variant="fade-up" duration={0.55}>
           <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Our Services</p>
           <h2 className="mt-2 text-4xl font-bold text-white sm:text-5xl">We Provide The Best Services</h2>
@@ -106,14 +106,14 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
+      <section className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20">
         <ScrollReveal
           variant="zoom-out"
           duration={0.55}
           className="relative isolate overflow-hidden rounded-sm border border-white/10"
         >
           <video
-            className="h-[420px] w-full object-cover"
+            className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[420px]"
             autoPlay
             muted
             loop
@@ -126,7 +126,7 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-[#001225]/60" />
           <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
             <div>
-              <h2 className="max-w-3xl text-4xl font-bold leading-tight text-white sm:text-5xl">
+              <h2 className="max-w-3xl text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
                 Mission is to Growth Your Business &amp; More
               </h2>
               <button
