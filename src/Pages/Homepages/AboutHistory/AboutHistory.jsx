@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { ScrollReveal } from '../../../components/ScrollReveal/ScrollReveal.jsx'
 
 const HIGHLIGHTS = [
@@ -22,9 +23,74 @@ const HIGHLIGHTS = [
 ]
 
 const STATS = [
-  { value: '3k', label: 'Design Staff' },
-  { value: '12k', label: 'Project Completed' },
+  { end: 3, suffix: 'k', label: 'Design Staff' },
+  { end: 12, suffix: 'k', label: 'Project Completed' },
 ]
+
+function AnimatedStatValue({ end, suffix, delayMs }) {
+  const [value, setValue] = useState(0)
+  const containerRef = useRef(null)
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setActive(true)
+      },
+      { threshold: 0.35, rootMargin: '0px 0px -8% 0px' }
+    )
+
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!active) return
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      setValue(end)
+      return
+    }
+
+    const durationMs = 1600
+    const startWall = performance.now() + delayMs
+    let rafId = 0
+    let cancelled = false
+
+    const easeOutCubic = (t) => 1 - (1 - t) ** 3
+
+    const tick = (now) => {
+      if (cancelled) return
+      if (now < startWall) {
+        rafId = requestAnimationFrame(tick)
+        return
+      }
+
+      const elapsed = now - startWall
+      const progress = Math.min(1, elapsed / durationMs)
+      setValue(Math.round(end * easeOutCubic(progress)))
+
+      if (progress < 1) rafId = requestAnimationFrame(tick)
+    }
+
+    rafId = requestAnimationFrame(tick)
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(rafId)
+    }
+  }, [active, delayMs, end])
+
+  return (
+    <span ref={containerRef} className="tabular-nums">
+      {value}
+      {suffix}
+    </span>
+  )
+}
 
 export default function AboutHistory() {
   return (
@@ -50,7 +116,9 @@ export default function AboutHistory() {
                     : 'bg-[linear-gradient(135deg,rgba(0,210,255,0.92),rgba(28,162,197,0.95))] text-[#02131d]'
                 }`}
               >
-                <p className="text-3xl font-black tracking-tight sm:text-[2rem]">{stat.value}</p>
+                <p className="text-3xl font-black tracking-tight sm:text-[2rem]">
+                  <AnimatedStatValue end={stat.end} suffix={stat.suffix} delayMs={index * 140} />
+                </p>
                 <p className={`mt-1 text-sm font-semibold ${index === 0 ? 'text-white/82' : 'text-[#042132]/88'}`}>
                   {stat.label}
                 </p>
@@ -84,8 +152,16 @@ export default function AboutHistory() {
                 className="flex items-start gap-4"
               >
                 <div className="flex flex-col items-center">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#00d2ff]/35 bg-[#0b2940]/70 text-sm font-bold text-[#7fe7ff] shadow-[0_0_0_6px_rgba(0,210,255,0.08)]">
-                    {item.id}
+                  <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#00d2ff]/35 bg-[#0b2940]/70 text-sm font-bold text-[#7fe7ff] shadow-[0_0_0_6px_rgba(0,210,255,0.08)]">
+                    <span
+                      className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#00d2ff]/75"
+                      style={{ animation: 'waterDrop 3.2s cubic-bezier(0.2, 0.7, 0.2, 1) infinite' }}
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#00d2ff]/55"
+                      style={{ animation: 'waterDrop 3.2s cubic-bezier(0.2, 0.7, 0.2, 1) 1.1s infinite' }}
+                    />
+                    <span className="relative z-[1]">{item.id}</span>
                   </span>
                   {index < HIGHLIGHTS.length - 1 ? (
                     <span className="mt-3 h-16 w-px bg-gradient-to-b from-[#00d2ff]/70 to-transparent" />
@@ -101,6 +177,25 @@ export default function AboutHistory() {
           </div>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes waterDrop {
+            0% {
+              transform: scale(0.8);
+              opacity: 0.9;
+            }
+            65% {
+              transform: scale(1.55);
+              opacity: 0;
+            }
+            100% {
+              transform: scale(1.55);
+              opacity: 0;
+            }
+          }
+        `}
+      </style>
     </section>
   )
 }
