@@ -1,4 +1,5 @@
 import { ScrollReveal } from '../../../components/ScrollReveal/ScrollReveal.jsx'
+import AboutHistory from '../AboutHistory/AboutHistory.jsx'
 import HeroSlider from '../HeroSlider/HeroSlider.jsx'
 import OurHistory from '../OurHistory/OurHistory.jsx'
 import PricingPlans from '../PricingPlans/PricingPlans.jsx'
@@ -8,6 +9,9 @@ export default function Home() {
     <div className="flex min-h-full flex-1 flex-col bg-transparent">
       <div className="flex flex-col gap-10 md:gap-14 lg:gap-16">
         <HeroSlider />
+        <ScrollReveal variant="fade-up" delay={0.04} duration={0.58}>
+          <AboutHistory />
+        </ScrollReveal>
         <ScrollReveal variant="fade-up" delay={0.08} duration={0.62}>
           <OurHistory />
         </ScrollReveal>

@@ -138,47 +138,7 @@ function TimelineRibbon({ className = '' }) {
 export default function OurHistory() {
   return (
     <section className="relative w-full overflow-hidden bg-transparent" aria-labelledby="our-history-heading">
-      {/* —— Stats hero (team image + bar) —— */}
-      <div className="relative min-h-[min(50vh,460px)] w-full pb-8 md:pb-12 lg:min-h-[480px]">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80)',
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent"
-          aria-hidden
-        />
-
-        <div className="relative mx-auto flex h-full min-h-[inherit] max-w-[1440px] flex-col justify-end px-4 pb-0 pt-16 sm:px-6 md:px-10 lg:px-12">
-          <ScrollReveal
-            variant="scale"
-            duration={0.58}
-            className="relative -mb-px w-full overflow-hidden rounded-t-xl border border-white/10 bg-transparent px-4 py-6 sm:px-8 sm:py-8"
-          >
-            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-4">
-              {STATS.map((s, i) => (
-                <div
-                  key={s.label}
-                  className="flex flex-col items-center text-center sm:items-start sm:text-left"
-                >
-                  <span className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.35rem]">
-                    <AnimatedStatValue end={s.end} suffix={s.suffix} delayMs={i * 110} />
-                  </span>
-                  <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55 sm:text-xs">
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </div>
-
-      {/* —— Timeline: How We Started —— */}
-      <div className="mx-auto max-w-[1440px] border-t border-white/[0.06] px-4 pb-6 pt-12 sm:px-6 md:px-10 md:pb-8 md:pt-14 lg:px-12 lg:pb-10 lg:pt-16">
+      <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-12 sm:px-6 md:px-10 md:pb-8 md:pt-14 lg:px-12 lg:pb-10 lg:pt-16">
         <ScrollReveal as="header" variant="blur-in" duration={0.65} className="mx-auto max-w-3xl text-center">
           <p
             className="text-xs font-bold uppercase tracking-[0.35em] sm:text-sm"

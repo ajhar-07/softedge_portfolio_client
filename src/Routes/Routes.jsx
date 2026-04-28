@@ -12,6 +12,7 @@ import MobilerPlatformPage from '../Pages/MobilrPlatform/MobilerPlatformPage.jsx
 import DataSynchronizationPage from '../Pages/DataSynchronization/DataSynchronizationPage.jsx'
 import ProcessAutomationPage from '../Pages/ProcessAutomation/ProcessAutomationPage.jsx'
 import OurTeampage from '../Pages/OurTeam/OurTeampage.jsx'
+import PrivacyPolicyPage from '../Pages/PrivacyPolicy/PrivacyPolicyPage.jsx'
 import ServicesPage from '../Pages/Services/ServicesPage.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
@@ -63,6 +64,7 @@ export default function AppRoutes() {
         <Route path="how-we-work" element={<HowWeWork />} />
         <Route path="our-team" element={<OurTeampage />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="information-security" element={<InformationSecurityPage />} />
         <Route path="mobile-platform" element={<MobilerPlatformPage />} />
         <Route path="data-synchronization" element={<DataSynchronizationPage />} />

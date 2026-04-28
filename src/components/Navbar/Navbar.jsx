@@ -75,6 +75,7 @@ const dropdownMenuClass =
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [logoSrc, setLogoSrc] = useState(logoSvgUrl)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const png = `${import.meta.env.BASE_URL}logo-softedge.png`
@@ -84,39 +85,49 @@ export default function Navbar() {
     probe.src = png
   }, [])
 
-  return (
-    <header className="sticky top-0 z-50 mb-2 px-2 pt-2 text-white sm:mb-4 sm:px-4 sm:pt-3 md:px-6 md:pt-4">
-      <div className="mx-auto max-w-[1440px] overflow-visible rounded-2xl border border-white/15 bg-[#000b1e]/45 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-2xl backdrop-saturate-150 md:rounded-[1.35rem]">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 overflow-visible px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 md:px-6 lg:gap-4 lg:px-10">
-        <Link
-          to="/"
-          className="flex shrink-0 items-center rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#43B7E8]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          aria-label="SoftEdge Technology Limited — Home"
-        >
-          <img
-            src={logoSrc}
-            alt=""
-            width={190}
-            height={48}
-            className="h-8 w-auto max-h-9 object-contain object-left sm:h-10 sm:max-h-11"
-            decoding="async"
-            onError={() => setLogoSrc(logoSvgUrl)}
-          />
-        </Link>
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 18)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-        <nav
-          className="hidden flex-1 items-center justify-center gap-6 overflow-visible lg:flex xl:gap-8"
-          aria-label="Main"
-        >
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 w-full text-white">
+      <div
+        className={`w-full overflow-visible transition-all duration-300 ${
+          scrolled
+            ? 'border-b border-white/8 bg-[linear-gradient(90deg,rgba(4,17,31,0.86)_0%,rgba(9,38,56,0.78)_50%,rgba(4,17,31,0.86)_100%)] shadow-[0_12px_34px_-22px_rgba(0,0,0,0.75)] backdrop-blur-md'
+            : 'border-b border-transparent bg-transparent shadow-none backdrop-blur-0'
+        }`}
+      >
+        <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 overflow-visible px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 lg:px-7">
+          <Link
+            to="/"
+            className="flex shrink-0 items-center rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#43B7E8]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            aria-label="SoftEdge Technology Limited — Home"
+          >
+            <img
+              src={logoSrc}
+              alt=""
+              width={190}
+              height={48}
+              className="h-8 w-auto max-h-9 object-contain object-left sm:h-9 sm:max-h-10"
+              decoding="async"
+              onError={() => setLogoSrc(logoSvgUrl)}
+            />
+          </Link>
+
+          <nav
+            className="hidden flex-1 items-center justify-center gap-5 overflow-visible lg:flex xl:gap-7"
+            aria-label="Main"
+          >
           <div className="dropdown dropdown-bottom dropdown-hover dropdown-center">
             <button type="button" tabIndex={0} className={navLinkClass}>
               Services
               <ChevronDown />
             </button>
             <ul tabIndex={-1} className={dropdownMenuClass}>
-              <li>
-                <a className="text-white/90 hover:bg-white/10">Overview</a>
-              </li>
               <li>
                 <Link to="/services" className="text-white/90 hover:bg-white/10">
                   Our Services
@@ -153,7 +164,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <a className="text-white/90 hover:bg-white/10">Consulting</a>
+                <Link to="/privacy-policy" className="text-white/90 hover:bg-white/10">
+                  Privacy Policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -223,48 +236,48 @@ export default function Navbar() {
           <Link to="/" className={`${navLinkClass} no-underline`}>
             Blog
           </Link>
-        </nav>
+          </nav>
 
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 md:gap-3">
-          <button
-            type="button"
-            className="group btn-brand hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2.5 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex md:px-4 md:text-xs"
-          >
-            Let&apos;s talk
-            <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5 md:h-4 md:w-4" />
-          </button>
+          <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 md:gap-2">
+            <button
+              type="button"
+              className="group btn-brand hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex"
+            >
+              Let&apos;s talk
+              <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5" />
+            </button>
 
-          <button
-            type="button"
-            className="hidden rounded p-2 text-white transition-all duration-200 hover:scale-110 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:inline-flex"
-            aria-label="Search"
-          >
-            <SearchIcon />
-          </button>
+            <button
+              type="button"
+              className="hidden rounded-md p-2 text-white transition-all duration-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:inline-flex"
+              aria-label="Search"
+            >
+              <SearchIcon />
+            </button>
 
-          <button
-            type="button"
-            className="rounded p-2 text-white transition-all duration-200 hover:scale-110 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((o) => !o)}
-          >
-            <TwoLineMenuIcon />
-          </button>
+            <button
+              type="button"
+              className="rounded-md p-2 text-white transition-all duration-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((o) => !o)}
+            >
+              <TwoLineMenuIcon />
+            </button>
 
-          <button
-            type="button"
-            className="hidden rounded p-2 text-white transition-all duration-200 hover:scale-110 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:inline-flex"
-            aria-label="More"
-          >
-            <TwoLineMenuIcon />
-          </button>
-        </div>
+            <button
+              type="button"
+              className="hidden rounded-md p-2 text-white transition-all duration-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:inline-flex"
+              aria-label="More"
+            >
+              <TwoLineMenuIcon />
+            </button>
+          </div>
         </div>
 
       {mobileOpen ? (
-        <div className="max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-b-2xl border-t border-white/10 bg-[#000b1e]/35 px-4 py-4 backdrop-blur-md md:rounded-b-[1.35rem] lg:hidden">
-          <nav className="flex flex-col gap-2.5" aria-label="Mobile">
+        <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-white/10 bg-[linear-gradient(180deg,rgba(4,17,31,0.94)_0%,rgba(7,29,43,0.92)_100%)] px-4 py-3.5 backdrop-blur-md lg:hidden">
+          <nav className="flex flex-col gap-2" aria-label="Mobile">
             <Link
               to="/services"
               className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
@@ -319,6 +332,14 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
             >
               Content Management
+              <ChevronDown />
+            </Link>
+            <Link
+              to="/privacy-policy"
+              className="flex items-center justify-between py-2 text-sm font-medium text-white/95"
+              onClick={() => setMobileOpen(false)}
+            >
+              Privacy Policy
               <ChevronDown />
             </Link>
             <Link
