@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../Context/Authcontext/AuthContext'
+import useUserRole from '../../Hooks/userRole.jsx'
 import logoSvgUrl from '../../assets/brand/logo-softedge.svg?url'
 
 function ChevronDown({ className = 'h-3 w-3' }) {
@@ -73,9 +75,18 @@ const dropdownMenuClass =
   'dropdown-content menu z-[1000] mt-1 min-w-[12rem] rounded-xl border border-white/15 bg-[#000b1e]/45 p-2 text-sm shadow-[0_12px_40px_-8px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-2xl backdrop-saturate-150'
 
 export default function Navbar() {
+  const { user, logout } = useContext(AuthContext)
+  const { role } = useUserRole()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [logoSrc, setLogoSrc] = useState(logoSvgUrl)
   const [scrolled, setScrolled] = useState(false)
+
+  const isAdmin = role === 'admin'
+
+  const handleLogout = async () => {
+    await logout()
+    setMobileOpen(false)
+  }
 
   useEffect(() => {
     const png = `${import.meta.env.BASE_URL}logo-softedge.png`
@@ -233,19 +244,43 @@ export default function Navbar() {
           <Link to="/" className={`${navLinkClass} no-underline`}>
             Case Study
           </Link>
+          {isAdmin ? (
+            <Link to="/dashboard" className={`${navLinkClass} no-underline`}>
+              Dashboard
+            </Link>
+          ) : null}
           <Link to="/" className={`${navLinkClass} no-underline`}>
             Blog
           </Link>
           </nav>
 
           <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 md:gap-2">
-            <button
-              type="button"
-              className="group btn-brand hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex"
-            >
-              Let&apos;s talk
-              <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5" />
-            </button>
+            {user ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="group hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex"
+              >
+                Logout
+                <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5" />
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="hidden rounded-lg border border-white/15 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-white transition hover:border-[#00d2ff]/50 hover:text-[#00d2ff] sm:inline-flex"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="group hidden items-center gap-2 rounded-lg bg-[#00d2ff] px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:inline-flex"
+                >
+                  Register
+                  <ArrowUpRight className="btn-brand-icon h-3.5 w-3.5" />
+                </Link>
+              </>
+            )}
 
             <button
               type="button"
@@ -387,6 +422,15 @@ export default function Navbar() {
             >
               Our Team
             </Link>
+            {isAdmin ? (
+              <Link
+                to="/dashboard"
+                className="py-2 text-sm font-medium text-white/95"
+                onClick={() => setMobileOpen(false)}
+              >
+                Dashboard
+              </Link>
+            ) : null}
             <Link
               to="/"
               className="py-2 text-sm font-medium text-white/95"
@@ -401,6 +445,32 @@ export default function Navbar() {
             >
               Blog
             </Link>
+            {user ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="rounded-lg border border-[#00d2ff]/30 bg-[#00d2ff]/10 px-4 py-2 text-left text-sm font-semibold text-[#00d2ff]"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="py-2 text-sm font-medium text-white/95"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="py-2 text-sm font-medium text-[#00d2ff]"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       ) : null}
