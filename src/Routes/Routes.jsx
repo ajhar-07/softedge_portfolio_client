@@ -19,6 +19,7 @@ import Dashboard from '../Pages/DashboardPages/Dashboard/Dashboard.jsx'
 import DataSyynchronizationManagement from '../Pages/DashboardPages/dataSyynchronizationManagement/dataSyynchronizationManagement.jsx'
 import InformationSecurityManagement from '../Pages/DashboardPages/InformationSecurityManagement/InformationSecurityManagement.jsx'
 import MobilePlatformManagement from '../Pages/DashboardPages/MobilePlatformManagement/MobilePlatformManagement.jsx'
+import ProccessAutamationManagement from '../Pages/DashboardPages/ProccessAutamationManagement/ProccessAutamationManagement.jsx'
 import ServicesManagement from '../Pages/DashboardPages/ServicesManagement/ServicesManagement.jsx'
 import UserManagement from '../Pages/DashboardPages/UserManagement/UserManagement.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
@@ -56,6 +57,10 @@ export default function AppRoutes() {
           <Route
             path="dashboard/data-syynchronization-management"
             element={<DataSyynchronizationManagement />}
+          />
+          <Route
+            path="dashboard/proccess-autamation-management"
+            element={<ProccessAutamationManagement />}
           />
         </Route>
       </Route>

@@ -5,6 +5,7 @@ export const dashboardPageLinks = [
   { label: 'Information Security Management', to: '/dashboard/information-security-management' },
   { label: 'Mobile Platform Management', to: '/dashboard/mobile-platform-management' },
   { label: 'Data Synchronization Management', to: '/dashboard/data-syynchronization-management' },
+  { label: 'Proccess Autamation Management', to: '/dashboard/proccess-autamation-management' },
 ]
 
 export const dashboardSidebarGroups = [
@@ -15,7 +16,7 @@ export const dashboardSidebarGroups = [
       { label: 'Information Security', to: '/dashboard/information-security-management' },
       { label: 'Mobile Platform', to: '/dashboard/mobile-platform-management' },
       { label: 'Data Synchronization', to: '/dashboard/data-syynchronization-management' },
-      { label: 'Process Automation', to: '/process-automation' },
+      { label: 'Process Automation', to: '/dashboard/proccess-autamation-management' },
       { label: 'Event Processing', to: '/event-processing' },
       { label: 'Content Management', to: '/content-management' },
       { label: 'Privacy Policy', to: '/privacy-policy' },
