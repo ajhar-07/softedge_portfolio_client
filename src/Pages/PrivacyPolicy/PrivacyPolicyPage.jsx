@@ -1,37 +1,118 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ScrollReveal } from '../../components/ScrollReveal/ScrollReveal.jsx'
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80'
+/** Dashboard `PrivacyPolicyManagement` er sathe match — DB theke fetch. */
+function privacyPolicyPageUrl() {
+  const base = (import.meta.env.VITE_API_URL || 'http://localhost:5000').trim().replace(/\/$/, '')
+  return `${base}/api/privacy-policy-page`
+}
 
-const POLICY_SECTIONS = [
-  {
-    title: 'Introduction',
-    paragraphs: [
-      'SoftEdge Technology Limited is committed to protecting the privacy of our clients, partners, and website visitors. This Privacy Policy explains how we collect, use, store, and protect your personal information when you interact with our website or services.',
-      'By using our platform, you agree to the practices described in this policy. We encourage you to read this page carefully so you understand what information we process and why we process it.',
+const fallbackPageData = {
+  heroImage:
+    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80',
+  pageTitle: 'Privacy Policy',
+  sections: [
+    {
+      title: 'Introduction',
+      paragraphs: [
+        'SoftEdge Technology Limited is committed to protecting the privacy of our clients, partners, and website visitors. This Privacy Policy explains how we collect, use, store, and protect your personal information when you interact with our website or services.',
+        'By using our platform, you agree to the practices described in this policy. We encourage you to read this page carefully so you understand what information we process and why we process it.',
+      ],
+    },
+    {
+      title: 'Use of user information.',
+      paragraphs: [
+        'We use the information we collect to respond to inquiries, deliver requested services, improve user experience, maintain platform security, and communicate important service-related updates.',
+      ],
+      bullets: [
+        'Provide support and respond to business inquiries',
+        'Improve website performance and user experience',
+        'Maintain service quality, security, and compliance',
+      ],
+      footer:
+        'We only use personal information for legitimate business purposes and process it in a way that is relevant, limited, and appropriate for the services we provide.',
+    },
+    {
+      title: 'Disclosure of user information.',
+      paragraphs: [
+        'We do not sell or rent your personal information. Information may be shared only when necessary with trusted service providers, legal authorities, or internal teams that help us operate our business, and always under appropriate confidentiality and security obligations.',
+      ],
+    },
+  ],
+  asidePrivacyFirst: {
+    label: 'Privacy First',
+    title: 'Your data deserves clarity and protection.',
+    description:
+      'We keep our privacy practices transparent, secure, and aligned with the trust our clients place in us.',
+  },
+  asideHighlights: {
+    label: 'Highlights',
+    items: [
+      { text: 'Clear handling of personal and business information' },
+      { text: 'Restricted sharing with trusted parties only' },
+      { text: 'Security-focused storage and operational safeguards' },
     ],
   },
-  {
-    title: 'Use of user information.',
-    paragraphs: [
-      'We use the information we collect to respond to inquiries, deliver requested services, improve user experience, maintain platform security, and communicate important service-related updates.',
-    ],
-    bullets: [
-      'Provide support and respond to business inquiries',
-      'Improve website performance and user experience',
-      'Maintain service quality, security, and compliance',
-    ],
-    footer:
-      'We only use personal information for legitimate business purposes and process it in a way that is relevant, limited, and appropriate for the services we provide.',
+  asideNeedHelp: {
+    label: 'Need help?',
+    description:
+      'For privacy-related questions, you can connect with our team and request more information about data handling, updates, or policy clarification.',
   },
-  {
-    title: 'Disclosure of user information.',
-    paragraphs: [
-      'We do not sell or rent your personal information. Information may be shared only when necessary with trusted service providers, legal authorities, or internal teams that help us operate our business, and always under appropriate confidentiality and security obligations.',
-    ],
-  },
-]
+}
+
+function mergePrivacyPolicyPayload(data) {
+  if (!data || typeof data !== 'object') return fallbackPageData
+
+  const asidePrivacyFirst = data.asidePrivacyFirst && typeof data.asidePrivacyFirst === 'object'
+    ? {
+        label:
+          typeof data.asidePrivacyFirst.label === 'string'
+            ? data.asidePrivacyFirst.label
+            : fallbackPageData.asidePrivacyFirst.label,
+        title:
+          typeof data.asidePrivacyFirst.title === 'string'
+            ? data.asidePrivacyFirst.title
+            : fallbackPageData.asidePrivacyFirst.title,
+        description:
+          typeof data.asidePrivacyFirst.description === 'string'
+            ? data.asidePrivacyFirst.description
+            : fallbackPageData.asidePrivacyFirst.description,
+      }
+    : fallbackPageData.asidePrivacyFirst
+
+  const rawHighlights = data.asideHighlights
+  const asideHighlights =
+    rawHighlights && typeof rawHighlights === 'object'
+      ? {
+          label:
+            typeof rawHighlights.label === 'string' ? rawHighlights.label : fallbackPageData.asideHighlights.label,
+          items: Array.isArray(rawHighlights.items) ? rawHighlights.items : fallbackPageData.asideHighlights.items,
+        }
+      : fallbackPageData.asideHighlights
+
+  const asideNeedHelp = data.asideNeedHelp && typeof data.asideNeedHelp === 'object'
+    ? {
+        label:
+          typeof data.asideNeedHelp.label === 'string'
+            ? data.asideNeedHelp.label
+            : fallbackPageData.asideNeedHelp.label,
+        description:
+          typeof data.asideNeedHelp.description === 'string'
+            ? data.asideNeedHelp.description
+            : fallbackPageData.asideNeedHelp.description,
+      }
+    : fallbackPageData.asideNeedHelp
+
+  return {
+    heroImage: typeof data.heroImage === 'string' ? data.heroImage : fallbackPageData.heroImage,
+    pageTitle: typeof data.pageTitle === 'string' ? data.pageTitle : fallbackPageData.pageTitle,
+    sections: Array.isArray(data.sections) ? data.sections : fallbackPageData.sections,
+    asidePrivacyFirst,
+    asideHighlights,
+    asideNeedHelp,
+  }
+}
 
 function CheckIcon() {
   return (
@@ -48,20 +129,65 @@ function CheckIcon() {
 }
 
 export default function PrivacyPolicyPage() {
+  const [page, setPage] = useState(fallbackPageData)
+  const [loadError, setLoadError] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function load() {
+      setLoading(true)
+      setLoadError(null)
+      try {
+        const response = await fetch(privacyPolicyPageUrl())
+        if (!response.ok) throw new Error(`HTTP ${response.status}`)
+        const data = await response.json()
+        if (!cancelled) {
+          setPage(mergePrivacyPolicyPayload(data))
+          setLoadError(null)
+        }
+      } catch {
+        if (!cancelled) {
+          setPage(fallbackPageData)
+          setLoadError('Could not load privacy policy from the server; showing default text.')
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const { heroImage, pageTitle, sections, asidePrivacyFirst, asideHighlights, asideNeedHelp } = page
+
   return (
     <div className="w-full text-white">
+      {loading ? (
+        <p className="mx-auto max-w-7xl px-4 py-2 text-center text-sm text-white/50 sm:px-6 lg:px-8">
+          Loading privacy policy…
+        </p>
+      ) : null}
+      {loadError ? (
+        <p className="mx-auto max-w-7xl px-4 py-2 text-center text-sm text-amber-200/90 sm:px-6 lg:px-8">
+          {loadError}
+        </p>
+      ) : null}
+
       <section className="relative isolate overflow-hidden">
         <div
           className="h-[220px] w-full bg-cover bg-center sm:h-[250px]"
-          style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+          style={{ backgroundImage: `url(${heroImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/78 via-[#000b1e]/48 to-transparent" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00d2ff]/70 to-transparent" />
         <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <ScrollReveal variant="slide-right" duration={0.55}>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Privacy Policy
-            </h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{pageTitle}</h1>
             <p className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#20394a]/60 px-3 py-1 text-sm font-semibold text-white/90">
               <Link to="/" className="transition-colors hover:text-[#00d2ff]">
                 Home
@@ -88,22 +214,20 @@ export default function PrivacyPolicyPage() {
           <div className="h-1.5 w-full bg-gradient-to-r from-[#00d2ff] via-[#11425b] to-[#00d2ff]" />
           <div className="grid gap-8 px-6 py-8 sm:px-10 sm:py-10 lg:grid-cols-[minmax(0,1.7fr)_minmax(280px,0.9fr)] lg:gap-10 lg:px-14 lg:py-14">
             <div className="space-y-10 sm:space-y-12">
-              {POLICY_SECTIONS.map((section, index) => (
+              {sections.map((section, index) => (
                 <article
-                  key={section.title}
+                  key={section._id || section.title}
                   className="rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-6 shadow-[0_12px_40px_-24px_rgba(0,0,0,0.85)] sm:px-7 sm:py-7"
                 >
-                  <h2 className="text-3xl font-bold tracking-tight text-white sm:text-[2.1rem]">
-                    {section.title}
-                  </h2>
+                  <h2 className="text-3xl font-bold tracking-tight text-white sm:text-[2.1rem]">{section.title}</h2>
 
                   <div className="mt-4 space-y-5 text-base leading-8 text-white/72 sm:text-[17px]">
-                    {section.paragraphs.map((paragraph) => (
+                    {(section.paragraphs || []).map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
                   </div>
 
-                  {section.bullets ? (
+                  {section.bullets?.length ? (
                     <ul className="mt-6 space-y-3 text-base text-white/80 sm:text-[17px]">
                       {section.bullets.map((item) => (
                         <li
@@ -118,50 +242,38 @@ export default function PrivacyPolicyPage() {
                   ) : null}
 
                   {section.footer ? (
-                    <p className="mt-6 text-base leading-8 text-white/72 sm:text-[17px]">
-                      {section.footer}
-                    </p>
+                    <p className="mt-6 text-base leading-8 text-white/72 sm:text-[17px]">{section.footer}</p>
                   ) : null}
 
-                  {index < POLICY_SECTIONS.length - 1 ? (
-                    <div className="mt-10 border-t border-white/10" />
-                  ) : null}
+                  {index < sections.length - 1 ? <div className="mt-10 border-t border-white/10" /> : null}
                 </article>
               ))}
             </div>
 
             <aside className="space-y-5 lg:pt-1">
               <div className="rounded-2xl border border-[#00d2ff]/20 bg-[linear-gradient(180deg,rgba(0,210,255,0.14),rgba(0,11,30,0.32))] p-6 shadow-[0_16px_50px_-24px_rgba(0,210,255,0.45)]">
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Privacy First</p>
-                <h3 className="mt-3 text-2xl font-bold text-white">Your data deserves clarity and protection.</h3>
-                <p className="mt-4 text-base leading-8 text-white/75">
-                  We keep our privacy practices transparent, secure, and aligned with the trust our clients
-                  place in us.
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">
+                  {asidePrivacyFirst.label}
                 </p>
+                <h3 className="mt-3 text-2xl font-bold text-white">{asidePrivacyFirst.title}</h3>
+                <p className="mt-4 text-base leading-8 text-white/75">{asidePrivacyFirst.description}</p>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-[#071a2d]/80 p-6">
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Highlights</p>
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">{asideHighlights.label}</p>
                 <div className="mt-5 space-y-4">
-                  {[
-                    'Clear handling of personal and business information',
-                    'Restricted sharing with trusted parties only',
-                    'Security-focused storage and operational safeguards',
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3">
+                  {(asideHighlights.items || []).map((item) => (
+                    <div key={item._id || item.text} className="flex items-start gap-3">
                       <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#00d2ff]" />
-                      <p className="text-sm leading-7 text-white/75">{item}</p>
+                      <p className="text-sm leading-7 text-white/75">{item.text}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Need help?</p>
-                <p className="mt-4 text-base leading-8 text-white/75">
-                  For privacy-related questions, you can connect with our team and request more information
-                  about data handling, updates, or policy clarification.
-                </p>
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">{asideNeedHelp.label}</p>
+                <p className="mt-4 text-base leading-8 text-white/75">{asideNeedHelp.description}</p>
               </div>
             </aside>
           </div>

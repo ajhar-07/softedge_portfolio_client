@@ -6,6 +6,9 @@ export const dashboardPageLinks = [
   { label: 'Mobile Platform Management', to: '/dashboard/mobile-platform-management' },
   { label: 'Data Synchronization Management', to: '/dashboard/data-syynchronization-management' },
   { label: 'Proccess Autamation Management', to: '/dashboard/proccess-autamation-management' },
+  { label: 'Event Processing Management', to: '/dashboard/event-processing-management' },
+  { label: 'Content Management', to: '/dashboard/content-management' },
+  { label: 'Privacy Policy Management', to: '/dashboard/privacy-policy-management' },
 ]
 
 export const dashboardSidebarGroups = [
@@ -17,9 +20,9 @@ export const dashboardSidebarGroups = [
       { label: 'Mobile Platform', to: '/dashboard/mobile-platform-management' },
       { label: 'Data Synchronization', to: '/dashboard/data-syynchronization-management' },
       { label: 'Process Automation', to: '/dashboard/proccess-autamation-management' },
-      { label: 'Event Processing', to: '/event-processing' },
-      { label: 'Content Management', to: '/content-management' },
-      { label: 'Privacy Policy', to: '/privacy-policy' },
+      { label: 'Event Processing', to: '/dashboard/event-processing-management' },
+      { label: 'Content Management', to: '/dashboard/content-management' },
+      { label: 'Privacy Policy', to: '/dashboard/privacy-policy-management' },
     ],
   },
   {

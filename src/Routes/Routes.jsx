@@ -20,8 +20,11 @@ import DataSyynchronizationManagement from '../Pages/DashboardPages/dataSyynchro
 import InformationSecurityManagement from '../Pages/DashboardPages/InformationSecurityManagement/InformationSecurityManagement.jsx'
 import MobilePlatformManagement from '../Pages/DashboardPages/MobilePlatformManagement/MobilePlatformManagement.jsx'
 import ProccessAutamationManagement from '../Pages/DashboardPages/ProccessAutamationManagement/ProccessAutamationManagement.jsx'
+import EventProcessingManagement from '../Pages/DashboardPages/EventProcessingManagement/EventProcessingManagement.jsx'
+import ContentManagementDashboard from '../Pages/DashboardPages/ContentManagement/ContentManagement.jsx'
 import ServicesManagement from '../Pages/DashboardPages/ServicesManagement/ServicesManagement.jsx'
 import UserManagement from '../Pages/DashboardPages/UserManagement/UserManagement.jsx'
+import PrivacyPolicyManagement from '../Pages/DashboardPages/PrivacyPolicyManagement/PrivacyPolicyManagement.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 export default function AppRoutes() {
@@ -62,6 +65,9 @@ export default function AppRoutes() {
             path="dashboard/proccess-autamation-management"
             element={<ProccessAutamationManagement />}
           />
+          <Route path="dashboard/event-processing-management" element={<EventProcessingManagement />} />
+          <Route path="dashboard/content-management" element={<ContentManagementDashboard />} />
+          <Route path="dashboard/privacy-policy-management" element={<PrivacyPolicyManagement />} />
         </Route>
       </Route>
     </RouterRoutes>
