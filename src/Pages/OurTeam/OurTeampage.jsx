@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ScrollReveal } from '../../components/ScrollReveal/ScrollReveal.jsx'
 
-const TEAM_MEMBERS = [
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
+const TEAM_MEMBERS_SEED = [
   {
     name: 'Hamish French',
     role: 'Computer Scientist',
@@ -92,6 +95,43 @@ const TEAM_MEMBERS = [
   },
 ]
 
+const DEFAULT_PAGE_DATA = {
+  heroImage:
+    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80',
+  teamMembers: TEAM_MEMBERS_SEED.map((member, index) => ({
+    ...member,
+    _id: `default-${index}`,
+  })),
+}
+
+function mergeTeamPageData(data) {
+  const d = DEFAULT_PAGE_DATA
+  const raw = Array.isArray(data.teamMembers) ? data.teamMembers : []
+  const teamMembers = raw.length
+    ? raw
+        .map((member, index) => {
+          const social = member.social && typeof member.social === 'object' ? member.social : {}
+          return {
+            _id: member._id || `member-${index}`,
+            name: (member.name || '').trim(),
+            role: (member.role || '').trim(),
+            image: (member.image || '').trim(),
+            social: {
+              facebook: typeof social.facebook === 'string' ? social.facebook.trim() : '',
+              linkedin: typeof social.linkedin === 'string' ? social.linkedin.trim() : '',
+              github: typeof social.github === 'string' ? social.github.trim() : '',
+            },
+          }
+        })
+        .filter((member) => member.name && member.image)
+    : d.teamMembers
+
+  return {
+    heroImage: (data.heroImage ?? '').trim() || d.heroImage,
+    teamMembers,
+  }
+}
+
 function FacebookIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
@@ -117,14 +157,45 @@ function GithubIcon() {
 }
 
 export default function OurTeampage() {
+  const [pageData, setPageData] = useState(DEFAULT_PAGE_DATA)
+  const [fetchState, setFetchState] = useState('loading')
+
+  const teamMembers = pageData.teamMembers || []
+
+  useEffect(() => {
+    let ignore = false
+
+    const load = async () => {
+      setFetchState('loading')
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/our-team-page`)
+        if (!response.ok) throw new Error('Failed to fetch team page')
+        const data = await response.json()
+        if (!ignore) {
+          setPageData(mergeTeamPageData(data))
+          setFetchState('ok')
+        }
+      } catch {
+        if (!ignore) {
+          setPageData(DEFAULT_PAGE_DATA)
+          setFetchState('error')
+        }
+      }
+    }
+
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [])
+
   return (
     <div className="w-full text-white">
       <section className="relative isolate overflow-hidden">
         <div
           className="h-[220px] w-full bg-cover bg-center sm:h-[250px]"
           style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80)',
+            backgroundImage: `url(${pageData.heroImage})`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#000b1e]/75 via-[#000b1e]/45 to-transparent" />
@@ -145,55 +216,67 @@ export default function OurTeampage() {
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {TEAM_MEMBERS.map((member, index) => (
-            <ScrollReveal
-              key={member.name}
-              variant="fade-up"
-              delay={index * 0.06}
-              className="group overflow-hidden rounded-sm border border-white/10 bg-[#0a3146]/28 p-3"
-            >
-              <div className="relative overflow-hidden">
-                <img src={member.image} alt={member.name} className="h-64 w-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-[#000b1e]/85 via-[#000b1e]/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="mb-4 flex items-center gap-2">
-                    <a
-                      href={member.social.facebook}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${member.name} Facebook`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#1877f2]"
-                    >
-                      <FacebookIcon />
-                    </a>
-                    <a
-                      href={member.social.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${member.name} LinkedIn`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#0a66c2]"
-                    >
-                      <LinkedInIcon />
-                    </a>
-                    <a
-                      href={member.social.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${member.name} Github`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#24292f]"
-                    >
-                      <GithubIcon />
-                    </a>
+        {fetchState === 'loading' ? (
+          <p className="rounded-xl border border-white/10 bg-[#0a3146]/25 px-4 py-10 text-center text-sm text-white/70">
+            Loading…
+          </p>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {teamMembers.map((member, index) => (
+              <ScrollReveal
+                key={member._id || `${member.name}-${index}`}
+                variant="fade-up"
+                delay={index * 0.06}
+                className="group overflow-hidden rounded-sm border border-white/10 bg-[#0a3146]/28 p-3"
+              >
+                <div className="relative overflow-hidden">
+                  <img src={member.image} alt={member.name} className="h-64 w-full object-cover" loading="lazy" />
+                  <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-[#000b1e]/85 via-[#000b1e]/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="mb-4 flex items-center gap-2">
+                      {member.social.facebook ? (
+                        <a
+                          href={member.social.facebook}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${member.name} Facebook`}
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#1877f2]"
+                        >
+                          <FacebookIcon />
+                        </a>
+                      ) : null}
+                      {member.social.linkedin ? (
+                        <a
+                          href={member.social.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${member.name} LinkedIn`}
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#0a66c2]"
+                        >
+                          <LinkedInIcon />
+                        </a>
+                      ) : null}
+                      {member.social.github ? (
+                        <a
+                          href={member.social.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${member.name} Github`}
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#24292f]"
+                        >
+                          <GithubIcon />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="pt-3 text-center">
-                <h3 className="text-2xl font-bold text-white sm:text-3xl">{member.name}</h3>
-                <p className="mt-1 text-base text-white/70">{member.role}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+                <div className="pt-3 text-center">
+                  <h3 className="text-2xl font-bold text-white sm:text-3xl">{member.name}</h3>
+                  <p className="mt-1 text-base text-white/70">{member.role}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   )

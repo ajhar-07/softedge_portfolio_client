@@ -1,0 +1,661 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import DashboardShell from '../DashboardShell.jsx'
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_PAGE = '/api/erp-software-page'
+
+const initialPageForm = {
+  heroImage: '',
+  heroStripImage: '',
+  heroTitle: 'ERP Software',
+  sectionTitle: 'Enterprise Resource Planning — one connected backbone',
+  sectionDescription: '',
+  sectionDescriptionBottom: '',
+  finalDescription: '',
+  stripLabel: 'ERP',
+  mainServicesTitle: 'Main Services',
+  brochuresTitle: 'Brochures',
+  brochuresDescription: '',
+  brochuresPrimaryButton: 'Download',
+  brochuresOrLabel: 'OR',
+  brochuresSecondaryButton: 'Discover',
+  followUsTitle: 'Follow Us',
+}
+
+const initialForms = {
+  serviceLinks: { label: '', to: '' },
+  socials: { label: '' },
+  cards: { title: '', description: '', image: '', icon: 'chart', variant: 'overlay' },
+  featureBullets: { text: '' },
+  faqs: { question: '', answer: '', open: false },
+}
+
+const sectionLabels = {
+  serviceLinks: 'Main Services links',
+  socials: 'Social links',
+  cards: 'Cards',
+  featureBullets: 'Feature bullets',
+  faqs: 'FAQs',
+}
+
+async function apiRequest(path, options = {}) {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+    },
+    ...options,
+  })
+
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    throw new Error(data?.error || 'Request failed')
+  }
+  return data
+}
+
+async function uploadFile(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const response = await fetch(`${API_BASE_URL}/api/upload`, {
+    method: 'POST',
+    body: formData,
+  })
+
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    throw new Error(data?.error || 'File upload failed')
+  }
+
+  const fileUrl = data?.file?.url ? `${API_BASE_URL}${data.file.url}` : ''
+  if (!fileUrl) throw new Error('Uploaded file URL not found')
+  return fileUrl
+}
+
+export default function ERPSoftwareManagement() {
+  const [pageForm, setPageForm] = useState(initialPageForm)
+  const [sectionForms, setSectionForms] = useState(initialForms)
+  const [editing, setEditing] = useState({
+    serviceLinks: '',
+    socials: '',
+    cards: '',
+    featureBullets: '',
+    faqs: '',
+  })
+  const [pageData, setPageData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [savingPage, setSavingPage] = useState(false)
+  const [savingSection, setSavingSection] = useState('')
+  const [deletingKey, setDeletingKey] = useState('')
+  const [uploadingField, setUploadingField] = useState('')
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
+
+  const loadPageData = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      const data = await apiRequest(API_PAGE)
+      setPageData(data)
+      setPageForm({
+        heroImage: data.heroImage || '',
+        heroStripImage: data.heroStripImage || '',
+        heroTitle: data.heroTitle || initialPageForm.heroTitle,
+        sectionTitle: data.sectionTitle || initialPageForm.sectionTitle,
+        sectionDescription: data.sectionDescription || '',
+        sectionDescriptionBottom: data.sectionDescriptionBottom || '',
+        finalDescription: data.finalDescription || '',
+        stripLabel: data.stripLabel || 'ERP',
+        mainServicesTitle: data.mainServicesTitle || 'Main Services',
+        brochuresTitle: data.brochuresTitle || 'Brochures',
+        brochuresDescription: data.brochuresDescription || '',
+        brochuresPrimaryButton: data.brochuresPrimaryButton || 'Download',
+        brochuresOrLabel: data.brochuresOrLabel || 'OR',
+        brochuresSecondaryButton: data.brochuresSecondaryButton || 'Discover',
+        followUsTitle: data.followUsTitle || 'Follow Us',
+      })
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to load ERP software page data')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadPageData()
+  }, [])
+
+  const handlePageChange = (event) => {
+    const { name, value } = event.target
+    setPageForm((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleSectionFormChange = (section, event) => {
+    const { name, value, type, checked } = event.target
+    setSectionForms((current) => ({
+      ...current,
+      [section]: {
+        ...current[section],
+        [name]: type === 'checkbox' ? checked : value,
+      },
+    }))
+  }
+
+  const handleFileUpload = async (event, fieldName) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setUploadingField(fieldName)
+    setMessage('')
+    setError('')
+    try {
+      const uploadedUrl = await uploadFile(file)
+      setPageForm((current) => ({ ...current, [fieldName]: uploadedUrl }))
+      setMessage(`${fieldName} uploaded successfully`)
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to upload file')
+    } finally {
+      setUploadingField('')
+      event.target.value = ''
+    }
+  }
+
+  const handleSectionFileUpload = async (event, section, fieldName) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const uploadKey = `${section}-${fieldName}`
+    setUploadingField(uploadKey)
+    setMessage('')
+    setError('')
+    try {
+      const uploadedUrl = await uploadFile(file)
+      setSectionForms((current) => ({
+        ...current,
+        [section]: {
+          ...current[section],
+          [fieldName]: uploadedUrl,
+        },
+      }))
+      setMessage(`${sectionLabels[section]} image uploaded successfully`)
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to upload file')
+    } finally {
+      setUploadingField('')
+      event.target.value = ''
+    }
+  }
+
+  const handlePageSubmit = async (event) => {
+    event.preventDefault()
+    setSavingPage(true)
+    setMessage('')
+    setError('')
+    try {
+      const result = await apiRequest(API_PAGE, {
+        method: 'PUT',
+        body: JSON.stringify(pageForm),
+      })
+      setMessage(result.message || 'ERP software page updated successfully')
+      await loadPageData()
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to update page content')
+    } finally {
+      setSavingPage(false)
+    }
+  }
+
+  const handleSectionSubmit = async (section, event) => {
+    event.preventDefault()
+    setSavingSection(section)
+    setMessage('')
+    setError('')
+    try {
+      const editingId = editing[section]
+      const path = editingId ? `${API_PAGE}/${section}/${editingId}` : `${API_PAGE}/${section}`
+      const method = editingId ? 'PATCH' : 'POST'
+      const result = await apiRequest(path, {
+        method,
+        body: JSON.stringify(sectionForms[section]),
+      })
+
+      setMessage(result.message || `${sectionLabels[section]} updated successfully`)
+      setSectionForms((current) => ({ ...current, [section]: initialForms[section] }))
+      setEditing((current) => ({ ...current, [section]: '' }))
+      await loadPageData()
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to save section item')
+    } finally {
+      setSavingSection('')
+    }
+  }
+
+  const handleEditItem = (section, item) => {
+    let nextForm
+    if (section === 'serviceLinks') {
+      nextForm = { label: item.label || '', to: item.to || '' }
+    } else if (section === 'socials') {
+      nextForm = { label: item.label || '' }
+    } else if (section === 'cards') {
+      nextForm = {
+        title: item.title || '',
+        description: item.description || '',
+        image: item.image || '',
+        icon: item.icon || 'chart',
+        variant: item.variant || 'overlay',
+      }
+    } else if (section === 'featureBullets') {
+      nextForm = { text: item.text || '' }
+    } else {
+      nextForm = {
+        question: item.question || '',
+        answer: item.answer || '',
+        open: Boolean(item.open),
+      }
+    }
+
+    setSectionForms((current) => ({ ...current, [section]: nextForm }))
+    setEditing((current) => ({ ...current, [section]: item._id }))
+    setMessage('')
+    setError('')
+  }
+
+  const handleDeleteItem = async (section, itemId) => {
+    setDeletingKey(`${section}-${itemId}`)
+    setMessage('')
+    setError('')
+    try {
+      const result = await apiRequest(`${API_PAGE}/${section}/${itemId}`, {
+        method: 'DELETE',
+      })
+      setMessage(result.message || `${sectionLabels[section]} item deleted successfully`)
+      if (editing[section] === itemId) {
+        setEditing((current) => ({ ...current, [section]: '' }))
+        setSectionForms((current) => ({ ...current, [section]: initialForms[section] }))
+      }
+      await loadPageData()
+    } catch (requestError) {
+      setError(requestError.message || 'Failed to delete section item')
+    } finally {
+      setDeletingKey('')
+    }
+  }
+
+  const handleCancelEdit = (section) => {
+    setEditing((current) => ({ ...current, [section]: '' }))
+    setSectionForms((current) => ({ ...current, [section]: initialForms[section] }))
+  }
+
+  const renderSectionForm = (section) => {
+    const form = sectionForms[section]
+    const editingId = editing[section]
+    return (
+      <form className="mt-5 space-y-4" onSubmit={(event) => handleSectionSubmit(section, event)}>
+        {section === 'serviceLinks' ? (
+          <>
+            <input
+              type="text"
+              name="label"
+              value={form.label}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              placeholder="Label"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+              required
+            />
+            <input
+              type="text"
+              name="to"
+              value={form.to}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              placeholder="/erp-software"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+              required
+            />
+          </>
+        ) : null}
+
+        {section === 'socials' ? (
+          <input
+            type="text"
+            name="label"
+            value={form.label}
+            onChange={(event) => handleSectionFormChange(section, event)}
+            placeholder="Label"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+            required
+          />
+        ) : null}
+
+        {section === 'cards' ? (
+          <>
+            <input
+              type="text"
+              name="title"
+              value={form.title}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              placeholder="Card title"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+              required
+            />
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              rows="3"
+              placeholder="Card description"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+            />
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-white/82">Card image upload</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => handleSectionFileUpload(event, section, 'image')}
+                className="block w-full text-sm text-white/75 file:mr-4 file:rounded-xl file:border-0 file:bg-[#00d2ff] file:px-4 file:py-2 file:text-sm file:font-bold file:text-[#000b1e]"
+              />
+              <p className="mt-2 text-xs text-white/50">
+                {uploadingField === 'cards-image' ? 'Uploading card image...' : 'Choose an image file to upload'}
+              </p>
+              {form.image ? <p className="mt-2 break-all text-xs text-white/45">{form.image}</p> : null}
+            </label>
+            <select
+              name="icon"
+              value={form.icon}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              className="w-full rounded-2xl border border-white/10 bg-[#091f2f] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+            >
+              <option value="book">Book</option>
+              <option value="chart">Chart (finance / operations)</option>
+              <option value="layers">Layers (integrations)</option>
+              <option value="code">Code</option>
+              <option value="megaphone">Megaphone</option>
+            </select>
+            <select
+              name="variant"
+              value={form.variant}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              className="w-full rounded-2xl border border-white/10 bg-[#091f2f] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+            >
+              <option value="overlay">Overlay card</option>
+              <option value="footer">Footer card</option>
+            </select>
+          </>
+        ) : null}
+
+        {section === 'featureBullets' ? (
+          <textarea
+            name="text"
+            value={form.text}
+            onChange={(event) => handleSectionFormChange(section, event)}
+            rows="3"
+            placeholder="Bullet text (shown with checkmark on public page)"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+            required
+          />
+        ) : null}
+
+        {section === 'faqs' ? (
+          <>
+            <input
+              type="text"
+              name="question"
+              value={form.question}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              placeholder="Question"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+              required
+            />
+            <textarea
+              name="answer"
+              value={form.answer}
+              onChange={(event) => handleSectionFormChange(section, event)}
+              rows="4"
+              placeholder="Answer"
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none focus:border-[#00d2ff]/40"
+              required
+            />
+            <label className="flex items-center gap-3 text-sm text-white/80">
+              <input
+                type="checkbox"
+                name="open"
+                checked={form.open}
+                onChange={(event) => handleSectionFormChange(section, event)}
+              />
+              Open by default
+            </label>
+          </>
+        ) : null}
+
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="submit"
+            disabled={savingSection === section || uploadingField === `${section}-image`}
+            className="rounded-2xl bg-[#00d2ff] px-5 py-3 text-sm font-bold uppercase tracking-[0.16em] text-[#000b1e] transition hover:bg-[#38ddff] disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {savingSection === section ? 'Saving...' : editingId ? 'Update item' : 'Create item'}
+          </button>
+          {editingId ? (
+            <button
+              type="button"
+              onClick={() => handleCancelEdit(section)}
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:border-[#00d2ff]/22"
+            >
+              Cancel edit
+            </button>
+          ) : null}
+        </div>
+      </form>
+    )
+  }
+
+  const renderItemTitle = (section, item) => {
+    if (section === 'serviceLinks' || section === 'socials') return item.label
+    if (section === 'cards') return item.title
+    if (section === 'featureBullets') return item.text?.slice(0, 80) + (item.text?.length > 80 ? '…' : '')
+    return item.question
+  }
+
+  const renderItemDescription = (section, item) => {
+    if (section === 'serviceLinks') return item.to
+    if (section === 'socials') return 'Social button label'
+    if (section === 'cards') return `${item.description || ''}${item.variant ? ` | ${item.variant}` : ''}`
+    if (section === 'featureBullets') return item.text || ''
+    return item.answer
+  }
+
+  return (
+    <DashboardShell
+      title="ERP software management"
+      subtitle={
+        <>
+          Public page:{' '}
+          <Link to="/erp-software" className="text-[#00d2ff] underline hover:text-white">
+            /erp-software
+          </Link>{' '}
+          — ei dashboard theke hero, copy, cards, feature bullets, FAQs ar sidebar links CRUD korte parben.
+        </>
+      }
+    >
+      <div className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="space-y-5">
+          <div className="rounded-[28px] border border-white/10 bg-[#000b1e]/42 p-5 shadow-[0_12px_35px_-15px_rgba(0,0,0,0.52)] sm:p-6">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Page content</p>
+                <h2 className="mt-3 text-2xl font-black text-white">Hero and copy</h2>
+              </div>
+              <button
+                type="button"
+                onClick={loadPageData}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-white transition hover:border-[#00d2ff]/22"
+              >
+                Refresh
+              </button>
+            </div>
+
+            <form className="mt-6 space-y-4" onSubmit={handlePageSubmit}>
+              {[
+                ['heroTitle', 'Hero title'],
+                ['sectionTitle', 'Section title'],
+                ['sectionDescription', 'Section description'],
+                ['sectionDescriptionBottom', 'Section description (bottom)'],
+                ['finalDescription', 'Final description'],
+                ['stripLabel', 'Strip label'],
+                ['mainServicesTitle', 'Main services title'],
+                ['brochuresTitle', 'Brochures title'],
+                ['brochuresDescription', 'Brochures description'],
+                ['brochuresPrimaryButton', 'Primary button'],
+                ['brochuresOrLabel', 'OR label'],
+                ['brochuresSecondaryButton', 'Secondary button'],
+                ['followUsTitle', 'Follow us title'],
+              ].map(([name, label]) => (
+                <label key={name} className="block">
+                  <span className="mb-2 block text-sm font-medium text-white/82">{label}</span>
+                  {name.includes('Description') ? (
+                    <textarea
+                      name={name}
+                      value={pageForm[name]}
+                      onChange={handlePageChange}
+                      rows="4"
+                      className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition focus:border-[#00d2ff]/40"
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      name={name}
+                      value={pageForm[name]}
+                      onChange={handlePageChange}
+                      className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition focus:border-[#00d2ff]/40"
+                    />
+                  )}
+                </label>
+              ))}
+
+              <div className="space-y-4">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-white/82">Hero image upload</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => handleFileUpload(event, 'heroImage')}
+                    className="block w-full text-sm text-white/75 file:mr-4 file:rounded-xl file:border-0 file:bg-[#00d2ff] file:px-4 file:py-2 file:text-sm file:font-bold file:text-[#000b1e]"
+                  />
+                  <p className="mt-2 text-xs text-white/50">
+                    {uploadingField === 'heroImage' ? 'Uploading hero image...' : 'Choose an image file to upload'}
+                  </p>
+                  {pageForm.heroImage ? <p className="mt-2 break-all text-xs text-white/45">{pageForm.heroImage}</p> : null}
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-white/82">Hero strip image upload</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => handleFileUpload(event, 'heroStripImage')}
+                    className="block w-full text-sm text-white/75 file:mr-4 file:rounded-xl file:border-0 file:bg-[#00d2ff] file:px-4 file:py-2 file:text-sm file:font-bold file:text-[#000b1e]"
+                  />
+                  <p className="mt-2 text-xs text-white/50">
+                    {uploadingField === 'heroStripImage' ? 'Uploading strip image...' : 'Choose an image file to upload'}
+                  </p>
+                  {pageForm.heroStripImage ? (
+                    <p className="mt-2 break-all text-xs text-white/45">{pageForm.heroStripImage}</p>
+                  ) : null}
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={savingPage || Boolean(uploadingField)}
+                className="rounded-2xl bg-[#00d2ff] px-5 py-3 text-sm font-bold uppercase tracking-[0.16em] text-[#000b1e] transition hover:bg-[#38ddff] disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {savingPage ? 'Saving...' : 'Save page content'}
+              </button>
+            </form>
+          </div>
+
+          {Object.keys(sectionLabels).map((section) => (
+            <div
+              key={section}
+              className="rounded-[28px] border border-white/10 bg-[#000b1e]/42 p-5 shadow-[0_12px_35px_-15px_rgba(0,0,0,0.52)] sm:p-6"
+            >
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">{sectionLabels[section]}</p>
+              <h2 className="mt-3 text-2xl font-black text-white">Manage {sectionLabels[section]}</h2>
+              {renderSectionForm(section)}
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-[28px] border border-white/10 bg-[#000b1e]/42 p-5 shadow-[0_12px_35px_-15px_rgba(0,0,0,0.52)] sm:p-6">
+          <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00d2ff]">Current data</p>
+          <h2 className="mt-3 text-2xl font-black text-white">Live API content</h2>
+
+          {message ? (
+            <p className="mt-5 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+              {message}
+            </p>
+          ) : null}
+          {error ? (
+            <p className="mt-5 rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+              {error}
+            </p>
+          ) : null}
+
+          <div className="mt-6 space-y-5">
+            {loading ? (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-8 text-center text-sm text-white/68">
+                Loading…
+              </div>
+            ) : pageData ? (
+              <>
+                {Object.keys(sectionLabels).map((section) => (
+                  <div key={section} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                    <h3 className="text-lg font-bold text-white">{sectionLabels[section]}</h3>
+                    <div className="mt-4 space-y-3">
+                      {(pageData[section] || []).length ? (
+                        pageData[section].map((item) => (
+                          <div key={item._id} className="rounded-2xl border border-white/10 bg-[#0a3146]/22 p-4">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="min-w-0 flex-1">
+                                <p className="text-base font-bold text-white">{renderItemTitle(section, item)}</p>
+                                <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-7 text-white/68">
+                                  {renderItemDescription(section, item)}
+                                </p>
+                              </div>
+                              <div className="flex shrink-0 flex-wrap gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => handleEditItem(section, item)}
+                                  className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#00d2ff]/22"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteItem(section, item._id)}
+                                  disabled={deletingKey === `${section}-${item._id}`}
+                                  className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-red-200 transition hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-65"
+                                >
+                                  {deletingKey === `${section}-${item._id}` ? 'Deleting…' : 'Delete'}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-6 text-center text-sm text-white/68">
+                          No items in {sectionLabels[section]}.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </DashboardShell>
+  )
+}
