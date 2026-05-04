@@ -30,6 +30,14 @@ export const dashboardPageLinks = [
     label: 'Pharmacy Management Software',
     to: '/dashboard/pharmacy-management',
   },
+  {
+    label: 'Restaurant Management Software',
+    to: '/dashboard/restaurant-management',
+  },
+  {
+    label: 'Inventory Management Software',
+    to: '/dashboard/inventory-management',
+  },
 ]
 
 export const dashboardSidebarGroups = [
@@ -50,6 +58,8 @@ export const dashboardSidebarGroups = [
       { label: 'ERP Software', to: '/dashboard/erp-software-management' },
       { label: 'Hospital Management', to: '/dashboard/hospital-management' },
       { label: 'Pharmacy Management', to: '/dashboard/pharmacy-management' },
+      { label: 'Restaurant Management', to: '/dashboard/restaurant-management' },
+      { label: 'Inventory Management', to: '/dashboard/inventory-management' },
       { label: 'Privacy Policy', to: '/dashboard/privacy-policy-management' },
       { label: 'About Page', to: '/dashboard/about-management' },
       { label: 'How We Work', to: '/dashboard/how-we-work-management' },

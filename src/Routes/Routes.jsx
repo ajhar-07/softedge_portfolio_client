@@ -20,6 +20,8 @@ import EducationalInstituteManagementPage from '../Pages/EducationalInstituteMan
 import ERPSoftwarePage from '../Pages/ERPSoftware/ERPSoftwarePage.jsx'
 import HospitalManagementSoftwarePage from '../Pages/HospitalManagementSoftware/HospitalManagementSoftwarePage.jsx'
 import PharmacyManagementSoftwarePage from '../Pages/PharmacyManagementSoftware/PharmacyManagementSoftwarePage.jsx'
+import RestaurantManagementSoftwarePage from '../Pages/RestaurantManagement/RestaurantManagementSoftwarePage.jsx'
+import InventoryManagementSoftwarePage from '../Pages/InventoryManagement/InventoryManagementSoftwarePage.jsx'
 import Dashboard from '../Pages/DashboardPages/Dashboard/Dashboard.jsx'
 import DataSyynchronizationManagement from '../Pages/DashboardPages/dataSyynchronizationManagement/dataSyynchronizationManagement.jsx'
 import InformationSecurityManagement from '../Pages/DashboardPages/InformationSecurityManagement/InformationSecurityManagement.jsx'
@@ -39,6 +41,8 @@ import EducationalInstituteManagement from '../Pages/DashboardPages/EducationalI
 import ERPSoftwareManagement from '../Pages/DashboardPages/ERPSoftwareManagement/ERPSoftwareManagement.jsx'
 import HospitalManagement from '../Pages/DashboardPages/HospitalManagement/HospitalManagement.jsx'
 import PharrmacyManagement from '../Pages/DashboardPages/PharrmacyManagement/PharrmacyManagement.jsx'
+import RestaurantManagement from '../Pages/DashboardPages/RestaurantManagement/RestaurantManagement.jsx'
+import InventoryManagement from '../Pages/DashboardPages/InventoryManagement/InventoryManagement.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 export default function AppRoutes() {
@@ -62,6 +66,8 @@ export default function AppRoutes() {
         <Route path="erp-software" element={<ERPSoftwarePage />} />
         <Route path="hospital-management-software" element={<HospitalManagementSoftwarePage />} />
         <Route path="pharmacy-management-software" element={<PharmacyManagementSoftwarePage />} />
+        <Route path="restaurant-management-software" element={<RestaurantManagementSoftwarePage />} />
+        <Route path="inventory-management-software" element={<InventoryManagementSoftwarePage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="information-security" element={<InformationSecurityPage />} />
         <Route path="mobile-platform" element={<MobilerPlatformPage />} />
@@ -102,6 +108,8 @@ export default function AppRoutes() {
           <Route path="dashboard/erp-software-management" element={<ERPSoftwareManagement />} />
           <Route path="dashboard/hospital-management" element={<HospitalManagement />} />
           <Route path="dashboard/pharmacy-management" element={<PharrmacyManagement />} />
+          <Route path="dashboard/restaurant-management" element={<RestaurantManagement />} />
+          <Route path="dashboard/inventory-management" element={<InventoryManagement />} />
         </Route>
       </Route>
     </RouterRoutes>

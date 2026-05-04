@@ -106,9 +106,9 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Restaurant Management Software',
         description: 'POS + order system',
-        to: '/services',
+        to: '/restaurant-management-software',
       },
-      { label: 'Inventory Management Software', description: 'POS + billing', to: '/services' },
+      { label: 'Inventory Management Software', description: 'POS + billing', to: '/inventory-management-software' },
       {
         label: 'Municipality / Union Management',
         description: 'Service Point suite',
