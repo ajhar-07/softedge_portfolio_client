@@ -68,6 +68,7 @@ const megaLinkClass =
 /** Existing product pages — kept at top of Services menu */
 const LEGACY_SERVICE_LINKS = [
   { to: '/services', label: 'Our Services' },
+  { to: '/municipality-union-management', label: 'Municipality / Union Management' },
   { to: '/information-security', label: 'Our Information Security' },
   { to: '/mobile-platform', label: 'Mobile Platform' },
   { to: '/data-synchronization', label: 'Data Synchronization' },
@@ -112,12 +113,12 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Municipality / Union Management',
         description: 'Service Point suite',
-        to: '/services',
+        to: '/municipality-union-management',
       },
       {
         label: 'Payment Gateways & digital wallets',
         description: 'Microfinance software',
-        to: '/services',
+        to: '/payment-gateways',
       },
     ],
   },
@@ -127,11 +128,10 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: true,
     featured: false,
     items: [
-      { label: 'Website design & development', description: 'Corporate + dynamic sites', to: '/services' },
-      { label: 'Landing page design', description: 'Marketing-focused', to: '/services' },
-      { label: 'E-commerce & news portal', to: '/services' },
-      { label: 'Domain, hosting & server management', to: '/services' },
-      { label: 'Website maintenance & support packages', to: '/services' },
+      { label: 'Website design & development', description: 'Corporate + dynamic sites', to: '/website-development' },
+      { label: 'Landing page design', description: 'Marketing-focused', to: '/landing-page-design' },
+      { label: 'E-commerce & news portal', to: '/ecommerce-news-portal' },
+      { label: 'Domain, hosting, server management & support packages', to: '/domain-hosting-server-management' },
     ],
   },
   {
@@ -140,10 +140,16 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'Facebook & Google Ads management', to: '/services' },
-      { label: 'SEO (search engine optimization)', to: '/services' },
-      { label: 'Social media management', description: 'Page handling', to: '/services' },
-      { label: 'Content writing & branding', to: '/services' },
+      {
+        label: 'Ads + SEO management',
+        description: 'Facebook/Google Ads with search optimization',
+        to: '/services',
+      },
+      {
+        label: 'Social media + content writing + branding',
+        description: 'Page handling and brand content strategy',
+        to: '/services',
+      },
     ],
   },
   {
@@ -152,10 +158,16 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: true,
     featured: false,
     items: [
-      { label: 'Website security audit', to: '/information-security' },
-      { label: 'Penetration testing', description: 'Ethical hacking', to: '/information-security' },
-      { label: 'Data backup & disaster recovery', to: '/information-security' },
-      { label: 'Cloud security setup', description: 'AWS / Google Cloud', to: '/information-security' },
+      {
+        label: 'Security audit + penetration testing',
+        description: 'Website audit with ethical hacking checks',
+        to: '/information-security',
+      },
+      {
+        label: 'Backup, disaster recovery + cloud security setup',
+        description: 'AWS / Google Cloud hardening and continuity',
+        to: '/information-security',
+      },
     ],
   },
   {
@@ -164,14 +176,12 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'IoT smart office / smart home', to: '/process-automation' },
-      { label: 'Interactive smart board / ICT lab', to: '/process-automation' },
+      { label: 'IoT smart office/home + smart board/ICT lab', to: '/process-automation' },
       {
-        label: 'Biometric access control',
-        description: 'Door lock, gate, face recognition, cloud-managed',
+        label: 'Biometric access + CCTV surveillance',
+        description: 'Door/gate/face recognition with monitoring',
         to: '/process-automation',
       },
-      { label: 'CCTV surveillance & monitoring', to: '/process-automation' },
     ],
   },
   {
@@ -184,7 +194,7 @@ const SERVICE_MEGA_SECTIONS = [
         label: 'Service Point (municipality / union)',
         description:
           'Digital citizen services, tax & billing, social safety net, village court, admin & finance',
-        to: '/services',
+        to: '/municipality-union-management',
       },
     ],
   },
@@ -194,10 +204,15 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'Custom software development', description: 'Client requirement–based', to: '/services' },
-      { label: 'SaaS platform development', to: '/services' },
-      { label: 'Startup IT consulting & system setup', to: '/services' },
-      { label: 'Digital transformation consultancy', to: '/services' },
+      {
+        label: 'Custom software + SaaS platform development',
+        description: 'Requirement-based product and platform build',
+        to: '/services',
+      },
+      {
+        label: 'Startup IT consulting, system setup + digital transformation',
+        to: '/services',
+      },
     ],
   },
   {
@@ -207,13 +222,8 @@ const SERVICE_MEGA_SECTIONS = [
     featured: false,
     items: [
       {
-        label: 'Conversational AI & agentic chatbots',
-        description: 'Support agents, multilingual, sales recovery',
-        to: '/event-processing',
-      },
-      {
-        label: 'AI-powered analytics & decisions',
-        description: 'Inventory, finance, customer behaviour',
+        label: 'Conversational AI chatbots + AI analytics',
+        description: 'Support agents and intelligent decision insights',
         to: '/event-processing',
       },
       {
@@ -234,8 +244,7 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'IT training', description: 'Software use, office automation', to: '/services' },
-      { label: 'Internship program', description: 'Student-focused', to: '/services' },
+      { label: 'IT training + internship program', description: 'Software use and student-focused practical learning', to: '/services' },
       { label: '24/7 technical support & AMC', description: 'Annual maintenance contract', to: '/services' },
     ],
   },

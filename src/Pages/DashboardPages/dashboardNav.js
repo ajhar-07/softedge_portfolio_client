@@ -38,6 +38,30 @@ export const dashboardPageLinks = [
     label: 'Inventory Management Software',
     to: '/dashboard/inventory-management',
   },
+  {
+    label: 'Minicipality Management',
+    to: '/dashboard/minicipality-management',
+  },
+  {
+    label: 'Payment Gateways Management',
+    to: '/dashboard/payment-gateways-management',
+  },
+  {
+    label: 'Website Development Management',
+    to: '/dashboard/website-development-management',
+  },
+  {
+    label: 'Landing Page Management',
+    to: '/dashboard/landing-page-management',
+  },
+  {
+    label: 'Ecommerce & Portal Management',
+    to: '/dashboard/ecommerce-portal-management',
+  },
+  {
+    label: 'Domain Hosting Management',
+    to: '/dashboard/domain-hosting-management',
+  },
 ]
 
 export const dashboardSidebarGroups = [
@@ -60,6 +84,12 @@ export const dashboardSidebarGroups = [
       { label: 'Pharmacy Management', to: '/dashboard/pharmacy-management' },
       { label: 'Restaurant Management', to: '/dashboard/restaurant-management' },
       { label: 'Inventory Management', to: '/dashboard/inventory-management' },
+      { label: 'Minicipality Management', to: '/dashboard/minicipality-management' },
+      { label: 'Payment Gateways', to: '/dashboard/payment-gateways-management' },
+      { label: 'Website Development', to: '/dashboard/website-development-management' },
+      { label: 'Landing Page Design', to: '/dashboard/landing-page-management' },
+      { label: 'Ecommerce & News Portal', to: '/dashboard/ecommerce-portal-management' },
+      { label: 'Domain Hosting & Server', to: '/dashboard/domain-hosting-management' },
       { label: 'Privacy Policy', to: '/dashboard/privacy-policy-management' },
       { label: 'About Page', to: '/dashboard/about-management' },
       { label: 'How We Work', to: '/dashboard/how-we-work-management' },
