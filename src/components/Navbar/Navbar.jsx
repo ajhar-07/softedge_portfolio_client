@@ -143,12 +143,12 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Ads + SEO management',
         description: 'Facebook/Google Ads with search optimization',
-        to: '/services',
+        to: '/ads-seo-management',
       },
       {
         label: 'Social media + content writing + branding',
         description: 'Page handling and brand content strategy',
-        to: '/services',
+        to: '/social-content-branding',
       },
     ],
   },
@@ -161,12 +161,12 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Security audit + penetration testing',
         description: 'Website audit with ethical hacking checks',
-        to: '/information-security',
+        to: '/security-audit',
       },
       {
         label: 'Backup, disaster recovery + cloud security setup',
         description: 'AWS / Google Cloud hardening and continuity',
-        to: '/information-security',
+        to: '/backup-disaster-cloud',
       },
     ],
   },

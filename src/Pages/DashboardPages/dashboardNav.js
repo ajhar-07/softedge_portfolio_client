@@ -62,6 +62,22 @@ export const dashboardPageLinks = [
     label: 'Domain Hosting Management',
     to: '/dashboard/domain-hosting-management',
   },
+  {
+    label: 'Ads + SEO Management',
+    to: '/dashboard/ads-seo-management',
+  },
+  {
+    label: 'Social + Content + Branding Management',
+    to: '/dashboard/social-content-branding-management',
+  },
+  {
+    label: 'Security Audit + Pentest Management',
+    to: '/dashboard/security-audit-management',
+  },
+  {
+    label: 'Backup + DR + Cloud Management',
+    to: '/dashboard/backup-disaster-cloud-management',
+  },
 ]
 
 export const dashboardSidebarGroups = [
@@ -90,6 +106,19 @@ export const dashboardSidebarGroups = [
       { label: 'Landing Page Design', to: '/dashboard/landing-page-management' },
       { label: 'Ecommerce & News Portal', to: '/dashboard/ecommerce-portal-management' },
       { label: 'Domain Hosting & Server', to: '/dashboard/domain-hosting-management' },
+      { label: 'Ads + SEO', to: '/dashboard/ads-seo-management' },
+      {
+        label: 'Social + Content + Branding',
+        to: '/dashboard/social-content-branding-management',
+      },
+      {
+        label: 'Security audit + pentest',
+        to: '/dashboard/security-audit-management',
+      },
+      {
+        label: 'Backup + DR + cloud',
+        to: '/dashboard/backup-disaster-cloud-management',
+      },
       { label: 'Privacy Policy', to: '/dashboard/privacy-policy-management' },
       { label: 'About Page', to: '/dashboard/about-management' },
       { label: 'How We Work', to: '/dashboard/how-we-work-management' },

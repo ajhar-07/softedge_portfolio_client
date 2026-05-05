@@ -28,6 +28,11 @@ import WebsiteDevelopmentPage from '../Pages/WebsiteDevelopment/WebsiteDevelopme
 import LandingPageDesignPage from '../Pages/LandingPage/LandingPageDesignPage.jsx'
 import EcommerceNewsPortalPage from '../Pages/E-commerce&portal/EcommerceNewsPortalPage.jsx'
 import DomainHostingServerPage from '../Pages/DomainHostingServer/DomainHostingServerPage.jsx'
+import AdsSEOPage from '../Pages/AdsSEO/AdsSEOPage.jsx'
+import SocialContentBrandingPage from '../Pages/SocialContentBranding/SocialContentBrandingPage.jsx'
+import SecurityAuditPage from '../Pages/SecurityAudit/SecurityAuditPage.jsx'
+import BackupDisasterCloudPage from '../Pages/BackupDisasterCloud/BackupDisasterCloudPage.jsx'
+import BackupDisasterCloudManagement from '../Pages/DashboardPages/BackupDisasterCloudManagement/BackupDisasterCloudManagement.jsx'
 import Dashboard from '../Pages/DashboardPages/Dashboard/Dashboard.jsx'
 import DataSyynchronizationManagement from '../Pages/DashboardPages/dataSyynchronizationManagement/dataSyynchronizationManagement.jsx'
 import InformationSecurityManagement from '../Pages/DashboardPages/InformationSecurityManagement/InformationSecurityManagement.jsx'
@@ -55,6 +60,9 @@ import WebsiteDevelopmentManagement from '../Pages/DashboardPages/WebsiteDevelop
 import LandingPageManagement from '../Pages/DashboardPages/LandingPageManagement/LandingPageManagement.jsx'
 import EcommercePortalManagement from '../Pages/DashboardPages/Ecommerce&PortalManagement/EcommercePortalManagement.jsx'
 import DomainHostingManagement from '../Pages/DashboardPages/DomainHostingManagement/DomainHostingManagement.jsx'
+import AdsSEOManagement from '../Pages/DashboardPages/AdsSEOManagement/AdsSEOManagement.jsx'
+import SocialContentBrandingManagement from '../Pages/DashboardPages/SocialContentBrandingManagement/SocialContentBrandingManagement.jsx'
+import SecurityAuditManagement from '../Pages/DashboardPages/SecurityAuditManagement/SecurityAuditManagement.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 export default function AppRoutes() {
@@ -86,6 +94,10 @@ export default function AppRoutes() {
         <Route path="landing-page-design" element={<LandingPageDesignPage />} />
         <Route path="ecommerce-news-portal" element={<EcommerceNewsPortalPage />} />
         <Route path="domain-hosting-server-management" element={<DomainHostingServerPage />} />
+        <Route path="ads-seo-management" element={<AdsSEOPage />} />
+        <Route path="social-content-branding" element={<SocialContentBrandingPage />} />
+        <Route path="security-audit" element={<SecurityAuditPage />} />
+        <Route path="backup-disaster-cloud" element={<BackupDisasterCloudPage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="information-security" element={<InformationSecurityPage />} />
         <Route path="mobile-platform" element={<MobilerPlatformPage />} />
@@ -134,6 +146,16 @@ export default function AppRoutes() {
           <Route path="dashboard/landing-page-management" element={<LandingPageManagement />} />
           <Route path="dashboard/ecommerce-portal-management" element={<EcommercePortalManagement />} />
           <Route path="dashboard/domain-hosting-management" element={<DomainHostingManagement />} />
+          <Route path="dashboard/ads-seo-management" element={<AdsSEOManagement />} />
+          <Route
+            path="dashboard/social-content-branding-management"
+            element={<SocialContentBrandingManagement />}
+          />
+          <Route path="dashboard/security-audit-management" element={<SecurityAuditManagement />} />
+          <Route
+            path="dashboard/backup-disaster-cloud-management"
+            element={<BackupDisasterCloudManagement />}
+          />
         </Route>
       </Route>
     </RouterRoutes>
