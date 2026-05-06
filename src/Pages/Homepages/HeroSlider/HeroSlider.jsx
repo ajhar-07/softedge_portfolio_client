@@ -6,7 +6,7 @@ import { ScrollReveal } from '../../../components/ScrollReveal/ScrollReveal.jsx'
 const CYAN = '#00d2ff'
 const NAVY = '#0a3146'
 
-const slides = [
+const DEFAULT_SLIDES = [
   {
     id: 1,
     image:
@@ -50,19 +50,26 @@ function ArrowIcon({ direction = 'left' }) {
   )
 }
 
-export default function HeroSlider() {
+export default function HeroSlider({
+  slides = DEFAULT_SLIDES,
+  ctaPrimaryText = 'Discover More',
+  ctaPrimaryLink = '/about',
+  ctaSecondaryText = 'Get A Quote',
+  ctaSecondaryLink = '/services',
+}) {
+  const safeSlides = Array.isArray(slides) && slides.length ? slides : DEFAULT_SLIDES
   const [active, setActive] = useState(0)
 
   useEffect(() => {
     const id = setInterval(() => {
-      setActive((i) => (i + 1) % slides.length)
+      setActive((i) => (i + 1) % safeSlides.length)
     }, 6500)
     return () => clearInterval(id)
-  }, [])
+  }, [safeSlides.length])
 
-  const current = slides[active]
-  const goPrev = () => setActive((i) => (i - 1 + slides.length) % slides.length)
-  const goNext = () => setActive((i) => (i + 1) % slides.length)
+  const current = safeSlides[active] || safeSlides[0]
+  const goPrev = () => setActive((i) => (i - 1 + safeSlides.length) % safeSlides.length)
+  const goNext = () => setActive((i) => (i + 1) % safeSlides.length)
 
   return (
     <ScrollReveal
@@ -98,7 +105,7 @@ export default function HeroSlider() {
         </div>
 
         <div className="relative min-h-[480px] sm:min-h-[560px] lg:min-h-[640px]">
-        {slides.map((slide, index) => (
+        {safeSlides.map((slide, index) => (
           <article
             key={slide.id}
             className={`absolute inset-0 transition-opacity duration-700 ease-out ${
@@ -137,17 +144,17 @@ export default function HeroSlider() {
 
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Link
-                    to="/about"
+                    to={ctaPrimaryLink}
                     className="inline-flex min-w-[170px] items-center justify-center rounded-md bg-[#00d2ff] px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] text-[#00111d] transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                     style={{ outlineColor: CYAN }}
                   >
-                    Discover More
+                    {ctaPrimaryText}
                   </Link>
                   <Link
-                    to="/services"
+                    to={ctaSecondaryLink}
                     className="inline-flex items-center justify-center text-sm font-bold uppercase tracking-[0.08em] text-white underline decoration-white/55 underline-offset-4 transition hover:text-[#79e8ff] hover:decoration-[#79e8ff]"
                   >
-                    Get A Quote
+                    {ctaSecondaryText}
                   </Link>
                 </div>
 
@@ -155,7 +162,7 @@ export default function HeroSlider() {
                   className="mt-10 flex flex-wrap items-center gap-3 text-sm font-semibold tracking-wide sm:mt-12"
                   aria-label="Slide pagination"
                 >
-                  {slides.map((slide, i) => (
+                  {safeSlides.map((slide, i) => (
                     <button
                       key={slide.id}
                       type="button"
@@ -198,7 +205,7 @@ export default function HeroSlider() {
 
       {/* Screen-reader live region for current slide */}
       <p className="sr-only" aria-live="polite">
-        Slide {active + 1} of {slides.length}: {current.title}
+        Slide {active + 1} of {safeSlides.length}: {current.title}
       </p>
     </ScrollReveal>
   )

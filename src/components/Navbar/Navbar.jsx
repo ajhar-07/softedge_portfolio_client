@@ -176,11 +176,11 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'IoT smart office/home + smart board/ICT lab', to: '/process-automation' },
+      { label: 'IoT smart office/home + smart board/ICT lab', to: '/iot-smart-office-home' },
       {
         label: 'Biometric access + CCTV surveillance',
         description: 'Door/gate/face recognition with monitoring',
-        to: '/process-automation',
+        to: '/biometric-cctv-surveillance',
       },
     ],
   },
@@ -194,7 +194,7 @@ const SERVICE_MEGA_SECTIONS = [
         label: 'Service Point (municipality / union)',
         description:
           'Digital citizen services, tax & billing, social safety net, village court, admin & finance',
-        to: '/municipality-union-management',
+        to: '/service-point-municipality-union',
       },
     ],
   },
@@ -207,11 +207,11 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Custom software + SaaS platform development',
         description: 'Requirement-based product and platform build',
-        to: '/services',
+        to: '/custom-saas-platform-development',
       },
       {
         label: 'Startup IT consulting, system setup + digital transformation',
-        to: '/services',
+        to: '/startup-it-consulting-digital-transformation',
       },
     ],
   },
@@ -224,17 +224,17 @@ const SERVICE_MEGA_SECTIONS = [
       {
         label: 'Conversational AI chatbots + AI analytics',
         description: 'Support agents and intelligent decision insights',
-        to: '/event-processing',
+        to: '/conversational-ai-chatbots-analytics',
       },
       {
         label: 'Robotic process automation (RPA)',
         description: 'Data entry, HR & payroll, smart attendance',
-        to: '/process-automation',
+        to: '/robotic-process-automation',
       },
       {
         label: 'Generative AI for marketing',
         description: 'Auto-content, personalised campaigns',
-        to: '/content-management',
+        to: '/generative-ai-marketing',
       },
     ],
   },
@@ -244,8 +244,16 @@ const SERVICE_MEGA_SECTIONS = [
     diamond: false,
     featured: false,
     items: [
-      { label: 'IT training + internship program', description: 'Software use and student-focused practical learning', to: '/services' },
-      { label: '24/7 technical support & AMC', description: 'Annual maintenance contract', to: '/services' },
+      {
+        label: 'IT training + internship program',
+        description: 'Software use and student-focused practical learning',
+        to: '/it-training-internship-program',
+      },
+      {
+        label: '24/7 technical support & AMC',
+        description: 'Annual maintenance contract',
+        to: '/technical-support-amc',
+      },
     ],
   },
 ]

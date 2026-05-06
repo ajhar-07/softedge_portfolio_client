@@ -80,7 +80,7 @@ function AnimatedStatValue({ end, suffix, delayMs }) {
 
 const DESKTOP_CARD_VARIANTS = ['fade-up', 'slide-right', 'slide-left', 'zoom-out']
 
-const TIMELINE = [
+const DEFAULT_TIMELINE = [
   {
     year: '2000',
     title: 'Company founded',
@@ -135,7 +135,13 @@ function TimelineRibbon({ className = '' }) {
   )
 }
 
-export default function OurHistory() {
+export default function OurHistory({
+  eyebrow = 'Our history',
+  title = 'How We Started',
+  timeline = DEFAULT_TIMELINE,
+}) {
+  const safeTimeline = Array.isArray(timeline) && timeline.length ? timeline : DEFAULT_TIMELINE
+
   return (
     <section className="relative w-full overflow-hidden bg-transparent" aria-labelledby="our-history-heading">
       <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-12 sm:px-6 md:px-10 md:pb-8 md:pt-14 lg:px-12 lg:pb-10 lg:pt-16">
@@ -144,7 +150,7 @@ export default function OurHistory() {
             className="text-xs font-bold uppercase tracking-[0.35em] sm:text-sm"
             style={{ color: CYAN }}
           >
-            Our history
+            {eyebrow}
           </p>
           <div className="mx-auto mt-4 flex items-center justify-center gap-3">
             <span className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-white/25" />
@@ -159,14 +165,14 @@ export default function OurHistory() {
             id="our-history-heading"
             className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.25rem]"
           >
-            How We Started
+            {title}
           </h2>
         </ScrollReveal>
 
         {/* Desktop: horizontal line + ribbons + cards */}
         <div className="mt-14 hidden lg:block">
           <div className="grid grid-cols-4 gap-6 border-t border-white/25">
-            {TIMELINE.map((item, i) => (
+            {safeTimeline.map((item, i) => (
               <div key={item.year} className="relative flex flex-col items-center">
                 <div className="z-10 -mt-[1px] flex -translate-y-1/2 flex-col items-center">
                   <div
@@ -208,7 +214,7 @@ export default function OurHistory() {
 
         {/* Mobile / tablet: stacked */}
         <div className="mt-12 space-y-10 lg:hidden">
-          {TIMELINE.map((item, index) => (
+          {safeTimeline.map((item, index) => (
             <ScrollReveal
               key={item.year}
               as="article"

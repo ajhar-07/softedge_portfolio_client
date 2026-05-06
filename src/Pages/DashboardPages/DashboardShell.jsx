@@ -71,24 +71,35 @@ export default function DashboardShell({ title, subtitle, children }) {
                 </div>
               </div>
 
-              {dashboardSidebarGroups.map((group) => (
-                <div key={group.title}>
-                  <p className="mb-3 px-2 text-[11px] font-bold uppercase tracking-[0.22em] text-white/38">
-                    {group.title}
-                  </p>
-                  <div className="space-y-2">
+              {dashboardSidebarGroups.map((group, idx) => (
+                <details
+                  key={group.title}
+                  open={idx === 0}
+                  className="group overflow-hidden rounded-2xl border border-white/8 bg-white/[0.02]"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/62 transition hover:bg-[#0a3146]/30 hover:text-white">
+                    <span>{group.title}</span>
+                    <span className="text-xs transition group-open:rotate-90">›</span>
+                  </summary>
+                  <div className="space-y-1.5 border-t border-white/8 p-2.5">
                     {group.items.map((item) => (
-                      <Link
+                      <NavLink
                         key={`${group.title}-${item.label}`}
                         to={item.to}
-                        className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm font-medium text-white/74 transition hover:border-[#00d2ff]/20 hover:bg-[#0a3146]/34 hover:text-white"
+                        className={({ isActive }) =>
+                          `flex items-center justify-between rounded-xl border px-3 py-2.5 text-sm font-medium transition ${
+                            isActive
+                              ? 'border-[#00d2ff]/25 bg-[linear-gradient(135deg,rgba(0,210,255,0.24),rgba(91,124,255,0.18))] text-white'
+                              : 'border-white/8 bg-white/[0.03] text-white/74 hover:border-[#00d2ff]/20 hover:bg-[#0a3146]/34 hover:text-white'
+                          }`
+                        }
                       >
                         <span>{item.label}</span>
                         <span className="text-xs opacity-60">›</span>
-                      </Link>
+                      </NavLink>
                     ))}
                   </div>
-                </div>
+                </details>
               ))}
             </div>
           </aside>

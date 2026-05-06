@@ -5,7 +5,7 @@ import { ScrollReveal } from '../../../components/ScrollReveal/ScrollReveal.jsx'
 const CYAN = '#00d2ff'
 const NAVY = '#000b1e'
 
-const FEATURES = [
+const DEFAULT_FEATURES = [
   '30 Analytics Campaign',
   'Branded Reports',
   '700 Keywords',
@@ -13,7 +13,7 @@ const FEATURES = [
   'Phone & Email Support',
 ]
 
-const PLANS = [
+const DEFAULT_PLANS = [
   {
     id: 'basic',
     name: 'Basic',
@@ -39,7 +39,17 @@ const PLANS = [
 
 const CARD_VARIANTS = ['fade-up', 'slide-left', 'slide-right']
 
-export default function PricingPlans() {
+export default function PricingPlans({
+  eyebrow = 'Pricing table',
+  title = 'Our Pricing Plans',
+  plans = DEFAULT_PLANS,
+  features = DEFAULT_FEATURES,
+  buttonText = 'Start Now',
+  buttonLink = '/',
+}) {
+  const safePlans = Array.isArray(plans) && plans.length ? plans : DEFAULT_PLANS
+  const safeFeatures = Array.isArray(features) && features.length ? features : DEFAULT_FEATURES
+
   return (
     <section
       className="relative w-full bg-transparent px-4 pt-3 pb-10 sm:px-6 sm:pt-4 sm:pb-12 md:px-10 md:pt-6 md:pb-14 lg:px-12 lg:pt-8 lg:pb-16"
@@ -51,7 +61,7 @@ export default function PricingPlans() {
             className="text-xs font-bold uppercase tracking-[0.35em] sm:text-sm"
             style={{ color: CYAN }}
           >
-            Pricing table
+            {eyebrow}
           </p>
           <div className="mx-auto mt-4 flex items-center justify-center gap-3">
             <span className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-white/25" />
@@ -66,12 +76,12 @@ export default function PricingPlans() {
             id="pricing-heading"
             className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.15rem]"
           >
-            Our Pricing Plans
+            {title}
           </h2>
         </header>
 
         <div className="mt-6 grid gap-6 sm:mt-8 md:grid-cols-2 md:gap-7 lg:mt-10 lg:grid-cols-3 lg:gap-6">
-          {PLANS.map((plan, i) => (
+          {safePlans.map((plan, i) => (
             <ScrollReveal
               key={plan.id}
               variant={CARD_VARIANTS[i % CARD_VARIANTS.length]}
@@ -105,7 +115,7 @@ export default function PricingPlans() {
               </div>
 
               <ul className="flex flex-1 flex-col divide-y divide-white/10 px-1 py-2">
-                {FEATURES.map((line) => (
+                {safeFeatures.map((line) => (
                   <li
                     key={line}
                     className="px-4 py-3.5 text-center text-sm leading-snug text-white/85 sm:py-4 sm:text-[0.9375rem]"
@@ -117,11 +127,11 @@ export default function PricingPlans() {
 
               <div className="border-t border-white/10 px-5 pb-6 pt-5">
                 <Link
-                  to="/"
+                  to={buttonLink}
                   className="btn-brand flex w-full items-center justify-center rounded-lg px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-black shadow-[0_8px_24px_-8px_rgba(0,210,255,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00d2ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000b1e]"
                   style={{ backgroundColor: CYAN }}
                 >
-                  Start Now
+                  {buttonText}
                 </Link>
               </div>
             </ScrollReveal>

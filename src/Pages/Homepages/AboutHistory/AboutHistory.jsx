@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ScrollReveal } from '../../../components/ScrollReveal/ScrollReveal.jsx'
 
-const HIGHLIGHTS = [
+const DEFAULT_HIGHLIGHTS = [
   {
     id: '01',
     title: 'Advanced Innovative Agency',
@@ -22,7 +22,7 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
+const DEFAULT_STATS = [
   { end: 3, suffix: 'k', label: 'Design Staff' },
   { end: 12, suffix: 'k', label: 'Project Completed' },
 ]
@@ -92,14 +92,24 @@ function AnimatedStatValue({ end, suffix, delayMs }) {
   )
 }
 
-export default function AboutHistory() {
+export default function AboutHistory({
+  eyebrow = 'About Us',
+  title = 'Making the world advanced design work for you',
+  description = 'We are an experienced digital team delivering thoughtful design, practical engineering, and reliable support for brands that want to grow with confidence.',
+  image = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
+  highlights = DEFAULT_HIGHLIGHTS,
+  stats = DEFAULT_STATS,
+}) {
+  const safeHighlights = Array.isArray(highlights) && highlights.length ? highlights : DEFAULT_HIGHLIGHTS
+  const safeStats = Array.isArray(stats) && stats.length ? stats : DEFAULT_STATS
+
   return (
     <section className="relative w-full overflow-hidden bg-transparent" aria-labelledby="about-history-heading">
       <div className="mx-auto grid max-w-[1440px] gap-10 px-4 py-10 sm:px-6 sm:py-12 md:px-10 lg:grid-cols-[minmax(320px,0.94fr)_minmax(0,1.06fr)] lg:items-center lg:gap-14 lg:px-12 lg:py-16">
         <ScrollReveal variant="slide-right" duration={0.58} className="relative">
           <div className="overflow-hidden rounded-[26px] border border-white/10 shadow-[0_18px_60px_-22px_rgba(0,0,0,0.65)]">
             <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+              src={image}
               alt="Team collaboration"
               className="h-[420px] w-full object-cover sm:h-[500px] lg:h-[560px]"
               loading="lazy"
@@ -107,7 +117,7 @@ export default function AboutHistory() {
           </div>
 
           <div className="absolute inset-x-4 bottom-4 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 shadow-[0_16px_42px_-22px_rgba(0,0,0,0.82)] sm:inset-x-6 sm:bottom-6">
-            {STATS.map((stat, index) => (
+            {safeStats.map((stat, index) => (
               <div
                 key={stat.label}
                 className={`px-4 py-4 sm:px-5 sm:py-5 ${
@@ -129,21 +139,20 @@ export default function AboutHistory() {
 
         <div className="max-w-2xl">
           <ScrollReveal variant="fade-up" duration={0.55}>
-            <p className="text-xs font-bold uppercase tracking-[0.34em] text-[#7fe7ff] sm:text-sm">About Us</p>
+            <p className="text-xs font-bold uppercase tracking-[0.34em] text-[#7fe7ff] sm:text-sm">{eyebrow}</p>
             <h2
               id="about-history-heading"
               className="mt-3 max-w-xl text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[3rem]"
             >
-              Making the world advanced design work for you
+              {title}
             </h2>
             <p className="mt-5 max-w-xl text-base leading-8 text-white/72 sm:text-lg">
-              We are an experienced digital team delivering thoughtful design, practical engineering, and
-              reliable support for brands that want to grow with confidence.
+              {description}
             </p>
           </ScrollReveal>
 
           <div className="mt-8 space-y-6 sm:mt-10">
-            {HIGHLIGHTS.map((item, index) => (
+            {safeHighlights.map((item, index) => (
               <ScrollReveal
                 key={item.id}
                 variant="fade-up"
@@ -161,9 +170,9 @@ export default function AboutHistory() {
                       className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#00d2ff]/55"
                       style={{ animation: 'waterDrop 3.2s cubic-bezier(0.2, 0.7, 0.2, 1) 1.1s infinite' }}
                     />
-                    <span className="relative z-[1]">{item.id}</span>
+                    <span className="relative z-[1]">{item.badge || item.id}</span>
                   </span>
-                  {index < HIGHLIGHTS.length - 1 ? (
+                  {index < safeHighlights.length - 1 ? (
                     <span className="mt-3 h-16 w-px bg-gradient-to-b from-[#00d2ff]/70 to-transparent" />
                   ) : null}
                 </div>

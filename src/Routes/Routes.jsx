@@ -12,6 +12,16 @@ import InformationSecurityPage from '../Pages/InformationSecurity/InformationSec
 import MobilerPlatformPage from '../Pages/MobilrPlatform/MobilerPlatformPage.jsx'
 import DataSynchronizationPage from '../Pages/DataSynchronization/DataSynchronizationPage.jsx'
 import ProcessAutomationPage from '../Pages/ProcessAutomation/ProcessAutomationPage.jsx'
+import IoTSmartOfficeHomePage from '../Pages/IoT SmartOfficeHome/IoTSmartOfficeHomePage.jsx'
+import BiometricCCTVPage from '../Pages/BiometricCCTV/BiometricCCTVPage.jsx'
+import ConversationalAIPage from '../Pages/ConversationalAI/ConversationalAIPage.jsx'
+import RoboticProcessPage from '../Pages/RoboticProcess/RoboticProcessPage.jsx'
+import GenerativeAIMarketingPage from '../Pages/GenerativeAIMarketing/GenerativeAIMarketingPage.jsx'
+import ServicePointPage from '../Pages/ServicePoint/ServicePointPage.jsx'
+import CustomSaaSPage from '../Pages/CustomSaaS/CustomSaaSPage.jsx'
+import StartupITconsultingPage from '../Pages/StartupITconsulting/StartupITconsultingPage.jsx'
+import ITTrainingPage from '../Pages/ITTraining/ITTrainingPage.jsx'
+import TechnicalSupportPage from '../Pages/TechnicalSupport/TechnicalSupportPage.jsx'
 import OurTeampage from '../Pages/OurTeam/OurTeampage.jsx'
 import BlogsPage from '../Pages/Blogs/BlogsPage.jsx'
 import PrivacyPolicyPage from '../Pages/PrivacyPolicy/PrivacyPolicyPage.jsx'
@@ -63,6 +73,18 @@ import DomainHostingManagement from '../Pages/DashboardPages/DomainHostingManage
 import AdsSEOManagement from '../Pages/DashboardPages/AdsSEOManagement/AdsSEOManagement.jsx'
 import SocialContentBrandingManagement from '../Pages/DashboardPages/SocialContentBrandingManagement/SocialContentBrandingManagement.jsx'
 import SecurityAuditManagement from '../Pages/DashboardPages/SecurityAuditManagement/SecurityAuditManagement.jsx'
+import IoTSmartOfficeHomeManagement from '../Pages/DashboardPages/IoTSmartOfficeHomeManagement/IoTSmartOfficeHomeManagement.jsx'
+import BiometricCCTVManagement from '../Pages/DashboardPages/BiometricCCTVManagement/BiometricCCTVManagement.jsx'
+import ConversationalAIManagement from '../Pages/DashboardPages/ConversationalAIManagement/ConversationalAIManagement.jsx'
+import RoboticProcessManagement from '../Pages/DashboardPages/RoboticProcessManagement/RoboticProcessManagement.jsx'
+import GenerativeAIMarketingManagement from '../Pages/DashboardPages/GenerativeAIMarketingManagement/GenerativeAIMarketingManagement.jsx'
+import ServicePointManagement from '../Pages/DashboardPages/ServicePointManagement/ServicePointManagement.jsx'
+import CustomSaaSManagement from '../Pages/DashboardPages/CustomSaaSManagement/CustomSaaSManagement.jsx'
+import StartupITconsultingManagement from '../Pages/DashboardPages/StartupITconsultingManagement/StartupITconsultingManagement.jsx'
+import ITTrainingManagement from '../Pages/DashboardPages/ITTrainingManagement/ITTrainingManagement.jsx'
+import TechnicalSupportManagement from '../Pages/DashboardPages/TechnicalSupportManagement/TechnicalSupportManagement.jsx'
+import FooterManagement from '../Pages/DashboardPages/FooterManagement/FooterManagement.jsx'
+import HomePageManagement from '../Pages/DashboardPages/HomePageManagement/HomePageManagement.jsx'
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 export default function AppRoutes() {
@@ -103,6 +125,16 @@ export default function AppRoutes() {
         <Route path="mobile-platform" element={<MobilerPlatformPage />} />
         <Route path="data-synchronization" element={<DataSynchronizationPage />} />
         <Route path="process-automation" element={<ProcessAutomationPage />} />
+        <Route path="iot-smart-office-home" element={<IoTSmartOfficeHomePage />} />
+        <Route path="biometric-cctv-surveillance" element={<BiometricCCTVPage />} />
+        <Route path="conversational-ai-chatbots-analytics" element={<ConversationalAIPage />} />
+        <Route path="robotic-process-automation" element={<RoboticProcessPage />} />
+        <Route path="generative-ai-marketing" element={<GenerativeAIMarketingPage />} />
+        <Route path="service-point-municipality-union" element={<ServicePointPage />} />
+        <Route path="custom-saas-platform-development" element={<CustomSaaSPage />} />
+        <Route path="startup-it-consulting-digital-transformation" element={<StartupITconsultingPage />} />
+        <Route path="it-training-internship-program" element={<ITTrainingPage />} />
+        <Route path="technical-support-amc" element={<TechnicalSupportPage />} />
         <Route path="event-processing" element={<EventProcessingPage />} />
         <Route path="content-management" element={<ContentManagementPage />} />
 
@@ -152,6 +184,54 @@ export default function AppRoutes() {
             element={<SocialContentBrandingManagement />}
           />
           <Route path="dashboard/security-audit-management" element={<SecurityAuditManagement />} />
+          <Route
+            path="dashboard/iot-smart-office-home-management"
+            element={<IoTSmartOfficeHomeManagement />}
+          />
+          <Route
+            path="dashboard/biometric-cctv-management"
+            element={<BiometricCCTVManagement />}
+          />
+          <Route
+            path="dashboard/conversational-ai-management"
+            element={<ConversationalAIManagement />}
+          />
+          <Route
+            path="dashboard/robotic-process-management"
+            element={<RoboticProcessManagement />}
+          />
+          <Route
+            path="dashboard/generative-ai-marketing-management"
+            element={<GenerativeAIMarketingManagement />}
+          />
+          <Route
+            path="dashboard/service-point-management"
+            element={<ServicePointManagement />}
+          />
+          <Route
+            path="dashboard/custom-saas-management"
+            element={<CustomSaaSManagement />}
+          />
+          <Route
+            path="dashboard/startup-it-consulting-management"
+            element={<StartupITconsultingManagement />}
+          />
+          <Route
+            path="dashboard/it-training-management"
+            element={<ITTrainingManagement />}
+          />
+          <Route
+            path="dashboard/technical-support-management"
+            element={<TechnicalSupportManagement />}
+          />
+          <Route
+            path="dashboard/footer-management"
+            element={<FooterManagement />}
+          />
+          <Route
+            path="dashboard/home-page-management"
+            element={<HomePageManagement />}
+          />
           <Route
             path="dashboard/backup-disaster-cloud-management"
             element={<BackupDisasterCloudManagement />}
