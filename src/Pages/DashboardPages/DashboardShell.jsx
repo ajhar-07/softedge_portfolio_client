@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useMemo, useState } from 'react'
 import useUserRole from '../../Hooks/userRole.jsx'
 import { dashboardPageLinks, dashboardSidebarGroups } from './dashboardNav.js'
 
@@ -26,7 +27,31 @@ function BellIcon() {
 
 export default function DashboardShell({ title, subtitle, children }) {
   const { role, currentUser } = useUserRole()
+  const [searchTerm, setSearchTerm] = useState('')
   const displayName = currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Admin user'
+  const normalizedQuery = searchTerm.trim().toLowerCase()
+
+  const filteredPageLinks = useMemo(() => {
+    if (!normalizedQuery) return dashboardPageLinks
+    return dashboardPageLinks.filter(
+      (item) => item.label.toLowerCase().includes(normalizedQuery) || item.to.toLowerCase().includes(normalizedQuery),
+    )
+  }, [normalizedQuery])
+
+  const filteredSidebarGroups = useMemo(() => {
+    if (!normalizedQuery) return dashboardSidebarGroups
+    return dashboardSidebarGroups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter(
+          (item) =>
+            item.label.toLowerCase().includes(normalizedQuery) || item.to.toLowerCase().includes(normalizedQuery),
+        ),
+      }))
+      .filter((group) => group.items.length > 0)
+  }, [normalizedQuery])
+
+  const hasSearchResult = filteredPageLinks.length > 0 || filteredSidebarGroups.length > 0
 
   return (
     <div className="w-full bg-transparent text-white">
@@ -51,7 +76,7 @@ export default function DashboardShell({ title, subtitle, children }) {
                   Dashboard Pages
                 </p>
                 <div className="space-y-2">
-                  {dashboardPageLinks.map((item) => (
+                  {filteredPageLinks.map((item) => (
                     <NavLink
                       key={item.to}
                       to={item.to}
@@ -71,7 +96,7 @@ export default function DashboardShell({ title, subtitle, children }) {
                 </div>
               </div>
 
-              {dashboardSidebarGroups.map((group, idx) => (
+              {filteredSidebarGroups.map((group, idx) => (
                 <details
                   key={group.title}
                   open={idx === 0}
@@ -101,16 +126,32 @@ export default function DashboardShell({ title, subtitle, children }) {
                   </div>
                 </details>
               ))}
+
+              {normalizedQuery && !hasSearchResult ? (
+                <p className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white/65">
+                  No pages found for "{searchTerm}".
+                </p>
+              ) : null}
             </div>
           </aside>
 
           <div className="space-y-5">
             <div className="rounded-[28px] border border-white/10 bg-[#000b1e]/52 px-4 py-4 shadow-[0_16px_50px_-20px_rgba(0,0,0,0.62)] backdrop-blur-2xl backdrop-saturate-150 sm:px-5">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <div className="flex flex-1 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white/55">
+                <label
+                  htmlFor="dashboard-search"
+                  className="flex flex-1 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white/55"
+                >
                   <SearchIcon />
-                  <span className="text-sm">Search dashboard pages, controls or modules...</span>
-                </div>
+                  <input
+                    id="dashboard-search"
+                    type="search"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    placeholder="Search dashboard pages, controls or modules..."
+                    className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/45"
+                  />
+                </label>
 
                 <div className="flex items-center justify-between gap-3 sm:justify-end">
                   <button
